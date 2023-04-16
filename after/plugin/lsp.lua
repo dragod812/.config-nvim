@@ -4,7 +4,11 @@ local lsp = require("lsp-zero").preset("recommended")
 lsp.ensure_installed({
   'gopls',
   'pylsp',
-  'lua_ls'
+  'lua_ls',
+  'yamlls',
+  'bashls',
+  'jdtls',
+  'clangd'
 })
 
 -- Fix Undefined global 'vim'

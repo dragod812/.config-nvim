@@ -4,7 +4,7 @@
 vim.cmd [[packadd packer.nvim]]
 
 return require('packer').startup(function(use)
-  -- Packer can manage itself
+   -- Packer can manage itself
   use 'wbthomason/packer.nvim'
 
   use {
@@ -67,7 +67,11 @@ return require('packer').startup(function(use)
           'nvim-tree/nvim-web-devicons', -- optional
       },
       config = function()
-          require("nvim-tree").setup {}
+          require("nvim-tree").setup {
+                view  = {
+                    width = "20%",
+                }
+          }
       end
   }
 
