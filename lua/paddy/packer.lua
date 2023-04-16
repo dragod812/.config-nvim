@@ -21,12 +21,14 @@ return require('packer').startup(function(use)
   use('theprimeagen/harpoon')
   use("mbbill/undotree")
   use("tpope/vim-fugitive")
+  use("github/copilot.vim")
+
   use {
       'phaazon/hop.nvim',
       branch = 'v2', -- optional but strongly recommended
       config = function()
           -- you can configure Hop the way you like here; see :h hop-config
-          require'hop'.setup { keys = 'etovxqpdygfblzhckisuran' }
+          require'hop'.setup { keys = 'asdfghjkl;zxcvbnm,.qwertyuiop' }
       end
   }
 
@@ -56,6 +58,17 @@ return require('packer').startup(function(use)
 		  'nvim-lua/plenary.nvim',
 		  'stevearc/dressing.nvim', -- optional for vim.ui.select
 	  },
+  }
+
+
+  use {
+      'nvim-tree/nvim-tree.lua',
+      requires = {
+          'nvim-tree/nvim-web-devicons', -- optional
+      },
+      config = function()
+          require("nvim-tree").setup {}
+      end
   }
 
 end)
