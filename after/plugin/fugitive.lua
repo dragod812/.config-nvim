@@ -18,3 +18,4 @@ vim.keymap.set("v", "<leader>-", ":'<,'>diffget<CR>")
 vim.keymap.set("n", "gn", "]c")
 vim.keymap.set("n", "gp", "]c")
 
+-- haha --
