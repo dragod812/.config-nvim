@@ -4,75 +4,77 @@
 vim.cmd [[packadd packer.nvim]]
 
 return require('packer').startup(function(use)
-   -- Packer can manage itself
-  use 'wbthomason/packer.nvim'
+    -- Packer can manage itself
+    use 'wbthomason/packer.nvim'
 
-  use {
-	  'nvim-telescope/telescope.nvim', tag = '0.1.1',
-	  -- or                            , branch = '0.1.x',
-	  requires = { {'nvim-lua/plenary.nvim'} }
-  }
+    use {
+        'nvim-telescope/telescope.nvim', tag = '0.1.1',
+        -- or                            , branch = '0.1.x',
+        requires = { { 'nvim-lua/plenary.nvim' } }
+    }
 
-  use { 
-	  'lalitmee/cobalt2.nvim', 
-	  requires = 'tjdevries/colorbuddy.nvim',
-  }
+    use {
+        'lalitmee/cobalt2.nvim',
+        requires = 'tjdevries/colorbuddy.nvim',
+    }
 
-  use('theprimeagen/harpoon')
-  use("mbbill/undotree")
-  use("tpope/vim-fugitive")
-  use("github/copilot.vim")
+    use('theprimeagen/harpoon')
+    use("mbbill/undotree")
+    use("tpope/vim-fugitive")
+    use("github/copilot.vim")
+    use('nvim-treesitter/nvim-treesitter')
+    use('nvim-treesitter/nvim-treesitter-context')
 
-  use {
-      'phaazon/hop.nvim',
-      branch = 'v2', -- optional but strongly recommended
-      config = function()
-          -- you can configure Hop the way you like here; see :h hop-config
-          require'hop'.setup { keys = 'asdfghjkl;zxcvbnm,.qwertyuiop' }
-      end
-  }
+    use {
+        'phaazon/hop.nvim',
+        branch = 'v2', -- optional but strongly recommended
+        config = function()
+            -- you can configure Hop the way you like here; see :h hop-config
+            require 'hop'.setup { keys = 'asdfghjkl;zxcvbnm,.qwertyuiop' }
+        end
+    }
 
-  use {
-	  'VonHeikemen/lsp-zero.nvim',
-	  branch = 'v2.x',
-	  requires = {
-		  -- LSP Support
-		  {'neovim/nvim-lspconfig'},             -- Required
-		  {                                      -- Optional
-		  'williamboman/mason.nvim',
-		  run = function()
-			  pcall(vim.cmd, 'MasonUpdate')
-		  end,
-	  },
-	  {'williamboman/mason-lspconfig.nvim'}, -- Optional
-	  -- Autocompletion
-	  {'hrsh7th/nvim-cmp'},     -- Required
-	  {'hrsh7th/cmp-nvim-lsp'}, -- Required
-	  {'L3MON4D3/LuaSnip'},     -- Required
-  }
-  }
+    use {
+        'VonHeikemen/lsp-zero.nvim',
+        branch = 'v2.x',
+        requires = {
+            -- LSP Support
+            { 'neovim/nvim-lspconfig' }, -- Required
+            {
+                -- Optional
+                'williamboman/mason.nvim',
+                run = function()
+                    pcall(vim.cmd, 'MasonUpdate')
+                end,
+            },
+            { 'williamboman/mason-lspconfig.nvim' }, -- Optional
+            -- Autocompletion
+            { 'hrsh7th/nvim-cmp' },                  -- Required
+            { 'hrsh7th/cmp-nvim-lsp' },              -- Required
+            { 'L3MON4D3/LuaSnip' },                  -- Required
+        }
+    }
 
-  use {
-	  'akinsho/flutter-tools.nvim',
-	  requires = {
-		  'nvim-lua/plenary.nvim',
-		  'stevearc/dressing.nvim', -- optional for vim.ui.select
-	  },
-  }
+    use {
+        'akinsho/flutter-tools.nvim',
+        requires = {
+            'nvim-lua/plenary.nvim',
+            'stevearc/dressing.nvim', -- optional for vim.ui.select
+        },
+    }
 
 
-  use {
-      'nvim-tree/nvim-tree.lua',
-      requires = {
-          'nvim-tree/nvim-web-devicons', -- optional
-      },
-      config = function()
-          require("nvim-tree").setup {
-                view  = {
+    use {
+        'nvim-tree/nvim-tree.lua',
+        requires = {
+            'nvim-tree/nvim-web-devicons', -- optional
+        },
+        config = function()
+            require("nvim-tree").setup {
+                view = {
                     width = "20%",
                 }
-          }
-      end
-  }
-
+            }
+        end
+    }
 end)

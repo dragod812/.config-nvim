@@ -9,7 +9,7 @@ vim.keymap.set("n", "N", "Nzzzv")
 
 -- vim.keymap.set("x", "<leader>p", [["_dP]])
 
- vim.keymap.set({"n", "v"}, "<leader>y", [["*y]])
+vim.keymap.set({ "n", "v" }, "<leader>y", [["*y]])
 -- vim.keymap.set("n", "<leader>Y", [["+Y]])
 -- vim.keymap.set({"n", "v"}, "<leader>d", [["_d]])
 
@@ -61,3 +61,6 @@ vim.keymap.set("n", "<leader><right>", "<C-w>L")
 vim.keymap.set("n", "<leader>C", ":let @+=expand('%:p')<CR>")
 -- copy relative file path
 vim.keymap.set("n", "<leader>c", "::let @+=expand('%', ':p:h:t')<CR>")
+
+-- open current folder
+vim.keymap.set("n", "gf", ":Ex<CR>")
