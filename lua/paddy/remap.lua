@@ -15,10 +15,10 @@ vim.keymap.set({ "n", "v" }, "<leader>y", [["*y]])
 
 vim.keymap.set("n", "<leader>f", vim.lsp.buf.format)
 
-vim.keymap.set("n", "<leader>n", ":cnext<CR>zz")
-vim.keymap.set("n", "<leader>p", ":cprev<CR>zz")
-vim.keymap.set("n", "<leader>k", "<cmd>lnext<CR>zz")
-vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
+vim.keymap.set("n", "<leader>j", ":cnext<CR>zz")
+vim.keymap.set("n", "<leader>k", ":cprev<CR>zz")
+vim.keymap.set("n", "<leader>J", "<cmd>lnext<CR>zz")
+vim.keymap.set("n", "<leader>K", "<cmd>lprev<CR>zz")
 
 
 vim.keymap.set("n", "g,", "<cmd>e ~/.config/nvim/lua/paddy/remap.lua<CR>");
@@ -28,9 +28,10 @@ vim.keymap.set("n", "<leader>-", "2<C-w><")
 vim.keymap.set("n", "<leader>=", "2<C-w>>")
 vim.keymap.set("n", "<leader>m", "<C-w>_<C-w>|")
 vim.keymap.set("n", "<leader>M", "<C-w>=")
-vim.keymap.set("n", "<C-Down>", ":resize +2<CR>")
-vim.keymap.set("n", "<C-Left>", ":vertical resize -2<CR>")
-vim.keymap.set("n", "<C-Right>", ":vertical resize +2<CR>")
+vim.keymap.set("n", "<A-Down>", ":resize -2<CR>")
+vim.keymap.set("n", "<A-Up>", ":resize +2<CR>")
+vim.keymap.set("n", "<A-Left>", ":vertical resize -2<CR>")
+vim.keymap.set("n", "<A-Right>", ":vertical resize +2<CR>")
 
 
 -- move between tabs
@@ -64,3 +65,13 @@ vim.keymap.set("n", "<leader>c", "::let @+=expand('%', ':p:h:t')<CR>")
 
 -- open current folder
 vim.keymap.set("n", "gf", ":Ex<CR>")
+
+-- open terminal in new tab
+-- run <C-\><C-n> to enter normal mode to exit terminal
+vim.keymap.set("n", "<leader>`", function()
+    vim.cmd.tabnew()
+    vim.cmd.terminal()
+end)
+
+-- open new tab
+vim.keymap.set("n", "<leader>n", ":tabnew<CR>")
