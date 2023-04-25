@@ -19,6 +19,7 @@ local field_opts = {
         "variable",
         "object",
         "array",
+        "constant",
     }
 }
 vim.keymap.set('n', '<leader>dv', function()

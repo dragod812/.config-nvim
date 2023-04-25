@@ -1,5 +1,10 @@
 vim.keymap.set("n", "<leader>gs", vim.cmd.Git)
-vim.keymap.set("n", "<leader>gl", vim.cmd.GlLog)
+vim.keymap.set("n", "<leader>gf", function()
+    vim.cmd('Git log -100 --oneline -- %');
+end, { silent = true , noremap = true })
+vim.keymap.set("n", "<leader>gl", function()
+    vim.cmd('Git log -100 --oneline .');
+end)
 vim.keymap.set("n", "<leader>gb", function()
     vim.cmd('Git blame');
 end)
