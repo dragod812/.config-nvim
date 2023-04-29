@@ -53,6 +53,10 @@ lsp.on_attach(function(client, bufnr)
     local opts = { buffer = bufnr, remap = false }
 
     vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
+    vim.keymap.set("n", "gD", function()
+        vim.lsp.buf.definition()
+        vim.cmd.vsplit()
+    end, opts)
     vim.keymap.set("n", "gr", function() vim.lsp.buf.references() end, opts)
     vim.keymap.set("n", "gt", function() vim.lsp.buf.type_definition() end, opts)
     vim.keymap.set("n", "go", function() vim.lsp.buf.document_symbol() end, opts)
@@ -65,6 +69,23 @@ lsp.on_attach(function(client, bufnr)
     vim.keymap.set("n", "<leader>vr", function() vim.lsp.buf.rename() end, opts)
     vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
 end)
+
+require('lspconfig').gopls.setup({
+    cmd = { 'gopls', '-remote=auto' },
+    flags = {
+        debounce_text_changes = 1000,
+    },
+    settings = {
+        gopls = {
+            directoryFilters = {
+                "-bazel-bin",
+                "-babzel-out",
+                "-bazel-testlogs",
+                "-bazel-mypkg"
+            },
+        },
+    },
+})
 
 lsp.setup()
 

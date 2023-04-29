@@ -59,9 +59,9 @@ vim.keymap.set("n", "<leader><up>", "<C-w>K")
 vim.keymap.set("n", "<leader><right>", "<C-w>L")
 
 -- copy file path
-vim.keymap.set("n", "<leader>C", ":let @+=expand('%:p')<CR>")
+vim.keymap.set("n", "<leader>C", ":let @\"=expand('%:p')<CR>")
 -- copy relative file path
-vim.keymap.set("n", "<leader>c", "::let @+=expand('%', ':p:h:t')<CR>")
+vim.keymap.set("n", "<leader>c", "::let @\"=expand('%', ':p:h:t')<CR>")
 
 -- open current folder
 vim.keymap.set("n", "gf", ":Ex<CR>")
@@ -69,9 +69,12 @@ vim.keymap.set("n", "gf", ":Ex<CR>")
 -- open terminal in new tab
 -- run <C-\><C-n> to enter normal mode to exit terminal
 vim.keymap.set("n", "<leader>`", function()
-    vim.cmd.tabnew()
     vim.cmd.terminal()
+    vim.cmd.file('term://zsh')
 end)
 
 -- open new tab
 vim.keymap.set("n", "<leader>n", ":tabnew<CR>")
+
+-- open new split
+vim.keymap.set("n", "<leader>s", ":vsplit<CR>")

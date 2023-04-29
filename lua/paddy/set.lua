@@ -26,3 +26,5 @@ vim.opt.updatetime = 50
 vim.opt.colorcolumn = "80"
 vim.g.mapleader = " "
 vim.opt.ignorecase = true
+
+vim.env.PATH = vim.env.VIM_PATH or vim.env.PATH

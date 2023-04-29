@@ -6,7 +6,7 @@ vim.keymap.set('n', '<leader>dd', builtin.diagnostics, {})
 local method_opts = {
     symbols = {
         "method",
-        "function",
+        "function"
     }
 }
 vim.keymap.set('n', '<leader>dm', function()
