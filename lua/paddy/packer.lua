@@ -20,6 +20,7 @@ return require('packer').startup(function(use)
     use('theprimeagen/harpoon')
     use("mbbill/undotree")
     use("tpope/vim-fugitive")
+    use("f-person/git-blame.nvim")
     use("github/copilot.vim")
     use('nvim-treesitter/nvim-treesitter')
     use('nvim-treesitter/nvim-treesitter-context')
@@ -89,7 +90,7 @@ return require('packer').startup(function(use)
         requires = {
             "MunifTanjim/nui.nvim",
             "nvim-lua/plenary.nvim",
-            "nvim-telescope/telescope.nvim"
+            "nvim-telescope/telescope.nvim",
         }
     })
     use({
@@ -100,5 +101,14 @@ return require('packer').startup(function(use)
                 -- Configuration here, or leave empty to use defaults
             })
         end
+    })
+    use({
+        'Wansmer/treesj',
+        requires = { 'nvim-treesitter' },
+        config = function()
+            require('treesj').setup({
+                use_default_keymaps = false,
+            })
+        end,
     })
 end)
