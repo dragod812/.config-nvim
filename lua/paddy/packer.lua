@@ -24,6 +24,9 @@ return require('packer').startup(function(use)
     use("github/copilot.vim")
     use('nvim-treesitter/nvim-treesitter')
     use('nvim-treesitter/nvim-treesitter-context')
+    -- install gounit binary - go install  github.com/hexdigest/gounit/cmd/gounit@latest
+    use('hexdigest/gounit-vim')
+
 
     use {
         'phaazon/hop.nvim',
