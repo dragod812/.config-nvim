@@ -1,0 +1,76 @@
+{{$func := .Func}}
+
+func Test{{ $func.Name }}(t *testing.T) {
+    t.Parallel()
+	tests := []struct {
+		name string
+		{{- if $func.IsMethod }}
+			init func(t minimock.Tester) {{ ast $func.ReceiverType }}
+			inspect func(r {{ ast $func.ReceiverType }}, t *testing.T) //inspects {{ ast $func.ReceiverType }} after execution of {{$func.Name}}
+		{{ end }}
+        {{ range $param := params $func }}
+            {{- $param}}
+        {{ end }}
+		{{ range $result := results $func}}
+			{{ want $result -}}
+		{{ end }}
+		{{- if $func.ReturnsError }}
+			wantErr bool
+		{{ end -}}
+	}{
+		{{- if eq .Comment "" }}
+            {
+
+            },
+		{{else}}
+			//{{ .Comment }}
+            {
+
+            },
+		{{end -}}
+	}
+
+	for _, tt := range tests {
+        tt := tt
+		t.Run(tt.name, func(t *testing.T) {
+          t.Parallel()
+          // ctrl := gomock.NewController(t)
+          // mockInterface := interfacemock.NewMockInterface(ctrl)
+          // mockInterface.EXPECT().MockFunction(
+            {{- range $i, $pn := $func.ParamsNames }}
+				{{- if not (eq $i 0)}}, {{end}}tt.{{ $pn }}{{ end }}).Return(
+                    {{- range $i, $pn := $func.ResultsNames }}
+				        {{- if not (eq $i 0)}}, {{end}}tt.{{ $pn }}{{ end }}).MaxTimes(1)
+
+
+			{{- if $func.IsMethod -}}
+
+				{{ if (gt $func.NumResults 0) }}{{ join $func.ResultsNames ", " }} := {{end}}receiver.{{$func.Name}}(
+					{{- range $i, $pn := $func.ParamsNames }}
+						{{- if not (eq $i 0)}},{{end}}tt.{{ $pn }}{{ end }})
+
+				if tt.inspect != nil {
+					tt.inspect(receiver, t)
+				}
+			{{ else }}
+				{{ if (gt $func.NumResults 0) }}{{ join $func.ResultsNames ", " }} := {{end}}{{$func.Name}}(
+					{{- range $i, $pn := $func.ParamsNames }}
+						{{- if not (eq $i 0)}},{{end}}tt.{{ $pn }}{{ end }})
+			{{end}}
+			{{ range $result := $func.ResultsNames }}
+				{{ if (eq $result "err") }}
+          if tt.wantErr {
+              require.Error(t, err)
+              return
+          } else {
+              require.Nil(t, err)
+          }
+					
+				{{ else }}
+				  require.Equal(t, tt.{{ want $result }}, {{ $result }}, "{{ receiver $func }}{{ $func.Name }} returned unexpected result")
+				{{end -}}
+			{{end -}}
+		})
+	}
+}
+
