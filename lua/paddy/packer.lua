@@ -27,6 +27,8 @@ return require('packer').startup(function(use)
     -- install gounit binary - go install  github.com/hexdigest/gounit/cmd/gounit@latest
     use('hexdigest/gounit-vim')
     use('ojroques/vim-oscyank')
+    use('gennaro-tedesco/nvim-peekup')
+
 
 
     use {
