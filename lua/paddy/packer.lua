@@ -26,6 +26,7 @@ return require('packer').startup(function(use)
     use('nvim-treesitter/nvim-treesitter-context')
     -- install gounit binary - go install  github.com/hexdigest/gounit/cmd/gounit@latest
     use('hexdigest/gounit-vim')
+    use('ojroques/vim-oscyank')
 
 
     use {

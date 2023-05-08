@@ -9,7 +9,13 @@ vim.keymap.set("n", "N", "Nzzzv")
 
 -- vim.keymap.set("x", "<leader>p", [["_dP]])
 
-vim.keymap.set({ "n", "v" }, "<leader>y", [["*y]])
+-- vim.keymap.set({ "n", "v" }, "<leader>y", [["*y]])
+vim.keymap.set('v', '<leader>y', '<Plug>OSCYankVisual')
+vim.keymap.set('n', '<leader>y', function()
+    vim.cmd('OSCYankRegister *')
+end)
+vim.keymap.set("n", "<leader>r", vim.cmd.reg)
+
 -- vim.keymap.set("n", "<leader>Y", [["+Y]])
 -- vim.keymap.set({"n", "v"}, "<leader>d", [["_d]])
 
@@ -78,3 +84,4 @@ vim.keymap.set("n", "<leader>n", ":tabnew<CR>")
 
 -- open new split
 vim.keymap.set("n", "<leader>s", ":vsplit<CR>")
+
