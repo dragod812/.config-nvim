@@ -20,6 +20,7 @@ end)
 vim.keymap.set("n", "<leader>g-", function()
     vim.cmd('Git reset --mixed HEAD');
 end)
+vim.keymap.set("n", "<leader>gr", ':Git rebase ')
 vim.keymap.set("n", "<leader>gc", ':Git checkout ')
 -- dont use
 vim.keymap.set("n", "<leader>gd", vim.cmd.Gdiffsplit)

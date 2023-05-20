@@ -84,13 +84,88 @@ return require('packer').startup(function(use)
             }
         end
     }
+    use {
+        'stevearc/oil.nvim',
+        config = function()
+            require('oil').setup(
+                {
+                    default_file_explorer = false,
+                    float = {
+                        padding = 2,
+                        max_width = 100,
+                        max_height = 40
+                    }
+                }
+            )
+        end
+    }
+    use {
+        'rgroli/other.nvim',
+        config = function()
+            require("other-nvim").setup({
+                mappings = {
+                    -- golang, python & dart custom mapping
+                    {
+                        pattern = "(.*).go$",
+                        target = "%1_test.go",
+                        context = "gototest"
+                    },
+                    {
+                        pattern = "(.*)_test.go$",
+                        target = "%1.go",
+                        context = "gototest"
+                    },
+                    {
+                        pattern = "(.*).py$",
+                        target = "%1_test.py",
+                        context = "gototest"
+                    },
+                    {
+                        pattern = "(.*)_test.py$",
+                        target = "%1.py",
+                        context = "gototest"
+                    },
+                    {
+                        pattern = "(.*).dart$",
+                        target = "%1_test.dart",
+                        context = "gototest"
+                    },
+                    {
+                        pattern = "(.*)_test.dart$",
+                        target = "%1.dart",
+                        context = "gototest"
+                    },
+                },
+                style = {
+                    -- How the plugin paints its window borders
+                    -- Allowed values are none, single, double, rounded, solid and shadow
+                    border = "solid",
+                    -- Column seperator for the window
+                    seperator = "|",
+                    -- width of the window in percent. e.g. 0.5 is 50%, 1.0 is 100%
+                    width = 0.7,
+                    -- min height in rows.
+                    -- when more columns are needed this value is extended automatically
+                    minHeight = 2
+                },
+            })
+        end
+
+    }
+
 
     use "terrortylor/nvim-comment"
 
     use({
         "jackMort/ChatGPT.nvim",
         config = function()
-            require("chatgpt").setup()
+            require("chatgpt").setup(
+                {
+                    openai_params = {
+                        model = "gpt-3.5-turbo-0301",
+                    }
+                }
+            )
         end,
         requires = {
             "MunifTanjim/nui.nvim",
@@ -118,12 +193,13 @@ return require('packer').startup(function(use)
     })
     use({
         'simrat39/symbols-outline.nvim',
-        config = function ()
+        config = function()
             require('symbols-outline').setup({
                 highlight_hovered_item = true,
                 show_guides = true,
+                show_numbers = true,
+                show_relative_numbers = true,
             })
         end
     })
-
 end)

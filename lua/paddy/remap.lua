@@ -70,7 +70,7 @@ vim.keymap.set("n", "<leader>C", ":let @\"=expand('%:p')<CR>")
 vim.keymap.set("n", "<leader>c", "::let @\"=expand('%', ':p:h:t')<CR>")
 
 -- open current folder
-vim.keymap.set("n", "gf", ":Ex<CR>")
+vim.keymap.set("n", "gf", ":Oil --float<CR>")
 
 -- open terminal in new tab
 -- run <C-\><C-n> to enter normal mode to exit terminal
@@ -83,5 +83,8 @@ end)
 vim.keymap.set("n", "<leader>n", ":tabnew<CR>")
 
 -- open new split
-vim.keymap.set("n", "<leader>s", ":vsplit<CR>")
+vim.keymap.set("n", "<leader>s", ":vsplit<CR><C-w>l")
+
+-- write file 
+vim.keymap.set({"n", "v", "i"}, "<C-s>", ":w<CR>")
 
