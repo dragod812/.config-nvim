@@ -53,12 +53,8 @@ lsp.on_attach(function(client, bufnr)
     local opts = { buffer = bufnr, remap = false }
 
     vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
-    vim.keymap.set("n", "gD", function()
-        vim.lsp.buf.definition()
-        vim.cmd.vsplit()
-    end, opts)
+    vim.keymap.set("n", "gD", function() vim.lsp.buf.type_definition() end, opts)
     vim.keymap.set("n", "gr", function() vim.lsp.buf.references() end, opts)
-    vim.keymap.set("n", "gt", function() vim.lsp.buf.type_definition() end, opts)
     vim.keymap.set("n", "go", function() vim.lsp.buf.document_symbol() end, opts)
     vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
     vim.keymap.set("n", "<leader>vf", function() vim.diagnostic.open_float() end, opts)
@@ -66,7 +62,7 @@ lsp.on_attach(function(client, bufnr)
     vim.keymap.set("n", "]d", function() vim.diagnostic.goto_next() end, opts)
     vim.keymap.set("n", "[d", function() vim.diagnostic.goto_prev() end, opts)
     vim.keymap.set("n", "<leader>va", function() vim.lsp.buf.code_action() end, opts)
-    vim.keymap.set({"n","i"}, "<A-.>", function() vim.lsp.buf.code_action() end, { noremap = true, silent = true })
+    vim.keymap.set({"n","i"}, "<C-i>", function() vim.lsp.buf.code_action() end, { noremap = true, silent = true })
     vim.keymap.set("n", "<leader>vr", function() vim.lsp.buf.rename() end, opts)
     vim.keymap.set("n", "<leader>vl", function() vim.cmd.LspRestart() end, opts)
     vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
@@ -88,6 +84,19 @@ require('lspconfig').gopls.setup({
         },
     },
 })
+
+require'lspconfig'.pylsp.setup{
+  settings = {
+    pylsp = {
+      plugins = {
+        pycodestyle = {
+          ignore = {'W391'},
+          maxLineLength = 120
+        }
+      }
+    }
+  }
+}
 
 lsp.setup()
 
