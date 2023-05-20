@@ -1,6 +1,6 @@
 # .config-nvim
 # Neovim configuration
-### Installing Neovim
+#### Instaling Neovim
 1. Install the required dependencies:
    ```
    sudo apt-get update
@@ -37,3 +37,8 @@
 That's it! You have installed Neovim from source on your Ubuntu system. You can now use the `nvim` command to launch Neovim and start editing files.
 
 
+#### Instal Packer
+```
+git clone --depth 1 https://github.com/wbthomason/packer.nvim\
+ ~/.local/share/nvim/site/pack/packer/start/packer.nvim
+```
