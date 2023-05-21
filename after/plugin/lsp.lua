@@ -36,7 +36,7 @@ cmp_mappings['<Tab>'] = nil
 cmp_mappings['<S-Tab>'] = nil
 
 lsp.setup_nvim_cmp({
-    mapping = cmp_mappings
+    mapping = cmp_mappings,
 })
 
 lsp.set_preferences({
@@ -56,17 +56,19 @@ lsp.on_attach(function(client, bufnr)
     vim.keymap.set("n", "gD", function() vim.lsp.buf.type_definition() end, opts)
     vim.keymap.set("n", "gr", function() vim.lsp.buf.references() end, opts)
     vim.keymap.set("n", "go", function() vim.lsp.buf.document_symbol() end, opts)
+    vim.keymap.set("n", "gl", "<C-w>l", opts)
     vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
     vim.keymap.set("n", "<leader>vf", function() vim.diagnostic.open_float() end, opts)
     vim.keymap.set("n", "<leader>vd", function() vim.diagnostic.setloclist() end, opts)
     vim.keymap.set("n", "]d", function() vim.diagnostic.goto_next() end, opts)
     vim.keymap.set("n", "[d", function() vim.diagnostic.goto_prev() end, opts)
     vim.keymap.set("n", "<leader>va", function() vim.lsp.buf.code_action() end, opts)
-    vim.keymap.set({"n","i"}, "<C-i>", function() vim.lsp.buf.code_action() end, { noremap = true, silent = true })
+    vim.keymap.set({"i"}, "<C-a>", function() vim.lsp.buf.code_action() end, { noremap = true, silent = true })
     vim.keymap.set("n", "<leader>vr", function() vim.lsp.buf.rename() end, opts)
     vim.keymap.set("n", "<leader>vl", function() vim.cmd.LspRestart() end, opts)
     vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
 end)
+
 
 require('lspconfig').gopls.setup({
     cmd = { 'gopls', '-remote=auto' },

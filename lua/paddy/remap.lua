@@ -53,16 +53,16 @@ vim.keymap.set("n", "<leader>9", "9gt")
 vim.keymap.set("n", "<leader>0", ":tablast<cr>")
 
 -- move between splits
-vim.keymap.set("n", "g<left>", "<C-w>h")
-vim.keymap.set("n", "g<down>", "<C-w>j")
-vim.keymap.set("n", "g<up>", "<C-w>k")
-vim.keymap.set("n", "g<right>", "<C-w>l")
+vim.keymap.set("n", "gh", "<C-w>h", { noremap = true, silent = true })
+vim.keymap.set("n", "gj", "<C-w>j", { noremap = true, silent = true })
+vim.keymap.set("n", "gk", "<C-w>k", { noremap = true, silent = true })
+vim.keymap.set("n", "gl", "<C-w>l", { noremap = true })
 
 -- move editor windows
-vim.keymap.set("n", "<leader><left>", "<C-w>H")
-vim.keymap.set("n", "<leader><down>", "<C-w>J")
-vim.keymap.set("n", "<leader><up>", "<C-w>K")
-vim.keymap.set("n", "<leader><right>", "<C-w>L")
+vim.keymap.set("n", "gH", "<C-w>H", { noremap = true, silent = true })
+vim.keymap.set("n", "gJ", "<C-w>J", { noremap = true, silent = true })
+vim.keymap.set("n", "gK", "<C-w>K", { noremap = true, silent = true })
+vim.keymap.set("n", "gL", "<C-w>L", { noremap = true, silent = true })
 
 -- copy file path
 vim.keymap.set("n", "<leader>C", ":let @\"=expand('%:p')<CR>")
@@ -85,6 +85,5 @@ vim.keymap.set("n", "<leader>n", ":tabnew<CR>")
 -- open new split
 vim.keymap.set("n", "<leader>s", ":vsplit<CR><C-w>l")
 
--- write file 
-vim.keymap.set({"n", "v", "i"}, "<C-s>", ":w<CR>")
-
+-- write file
+vim.keymap.set({ "n", "v", "i" }, "<C-s>", ":w<CR>")
