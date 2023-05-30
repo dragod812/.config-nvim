@@ -202,4 +202,87 @@ return require('packer').startup(function(use)
             })
         end
     })
+
+    -- plantuml preview requirements
+    use({
+        'weirongxu/plantuml-previewer.vim',
+        run = 'yarn install --frozen-lockfile',
+        config = function()
+            vim.g.plantuml_preview_image_format = 'png'
+            vim.g.plantuml_preview_output_directory = vim.fn.expand('~/.cache/plantuml')
+            vim.g.plantuml_preview_open_output_file = 1
+            vim.g.plantuml_preview_open_output_file_auto_delete = 1
+            vim.g.plantuml_preview_dot = 'dot'
+            vim.g.plantuml_preview_cmd = 'plantuml'
+            vim.g.plantuml_preview_args = '-charset UTF-8'
+            vim.g.plantuml_preview_mappings = {
+                preview = '<F5>',
+                refresh = '<F6>',
+            }
+        end
+    })
+    use('aklt/plantuml-syntax')
+    use('tyru/open-browser.vim')
+
+    -- test plugins
+    use('vim-test/vim-test')
+    use({
+        "nvim-neotest/neotest",
+        requires = {
+            "nvim-neotest/neotest-go",
+            "nvim-neotest/neotest-python",
+            'sidlatau/neotest-dart',
+            "nvim-lua/plenary.nvim",
+            "nvim-treesitter/nvim-treesitter",
+            "antoinemadec/FixCursorHold.nvim"
+            -- Your other test adapters here
+        },
+        config = function()
+            -- get neotest namespace (api call creates or returns namespace)
+            local neotest_ns = vim.api.nvim_create_namespace("neotest")
+            vim.diagnostic.config({
+                virtual_text = {
+                    format = function(diagnostic)
+                        local message =
+                            diagnostic.message:gsub("\n", " "):gsub("\t", " "):gsub("%s+", " "):gsub("^%s+", "")
+                        return message
+                    end,
+                },
+            }, neotest_ns)
+            require("neotest").setup({
+                -- your neotest config here
+                adapters = {
+                    require("neotest-go"),
+                    require("neotest-python")({
+                        -- Extra arguments for nvim-dap configuration
+                        -- See https://github.com/microsoft/debugpy/wiki/Debug-configuration-settings for values
+                        dap = { justMyCode = false },
+                        -- Command line arguments for runner
+                        -- Can also be a function to return dynamic values
+                        args = { "--log-level", "DEBUG" },
+                        -- Runner to use. Will use pytest if available by default.
+                        -- Can be a function to return dynamic value.
+                        runner = "pytest",
+                        -- Custom python path for the runner.
+                        -- Can be a string or a list of strings.
+                        -- Can also be a function to return dynamic value.
+                        -- If not provided, the path will be inferred by checking for
+                        -- virtual envs in the local directory and for Pipenev/Poetry configs
+                        python = ".venv/bin/python",
+                        -- Returns if a given file path is a test file.
+                        -- NB: This function is called a lot so don't perform any heavy tasks within it.
+                    }),
+                    require('neotest-dart') {
+                        command = 'flutter', -- Command being used to run tests. Defaults to `flutter`
+                        -- Change it to `fvm flutter` if using FVM
+                        -- change it to `dart` for Dart only tests
+                        use_lsp = true -- When set Flutter outline information is used when constructing test name.
+                    },
+                },
+            })
+        end,
+    })
+    use 'mfussenegger/nvim-dap'
+    use { "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } }
+    use 'leoluz/nvim-dap-go'
 end)

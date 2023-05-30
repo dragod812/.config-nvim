@@ -9,7 +9,7 @@ vim.keymap.set("n", "N", "Nzzzv")
 
 -- vim.keymap.set("x", "<leader>p", [["_dP]])
 
--- vim.keymap.set({ "n", "v" }, "<leader>y", [["*y]])
+vim.keymap.set({ "n", "v" }, "y", '"*y', { noremap = true })
 vim.keymap.set('v', '<leader>y', '<Plug>OSCYankVisual')
 vim.keymap.set('n', '<leader>y', function()
     vim.cmd('OSCYankRegister *')
