@@ -157,7 +157,7 @@ _G.packer_plugins = {
     url = "https://github.com/williamboman/mason.nvim"
   },
   neotest = {
-    config = { "\27LJ\2\n|\0\1\6\0\b\0\0229\1\0\0\18\3\1\0009\1\1\1'\4\2\0'\5\3\0B\1\4\2\18\3\1\0009\1\1\1'\4\4\0'\5\3\0B\1\4\2\18\3\1\0009\1\1\1'\4\5\0'\5\3\0B\1\4\2\18\3\1\0009\1\1\1'\4\6\0'\5\a\0B\1\4\2L\1\2\0\5\t^%s+\b%s+\6\t\6 \6\n\tgsub\fmessageÄ\3\1\0\t\0\24\1,6\0\0\0009\0\1\0009\0\2\0'\2\3\0B\0\2\0026\1\0\0009\1\4\0019\1\5\0015\3\t\0005\4\a\0003\5\6\0=\5\b\4=\4\n\3\18\4\0\0B\1\3\0016\1\v\0'\3\3\0B\1\2\0029\1\f\0015\3\22\0004\4\4\0006\5\v\0'\a\r\0B\5\2\2>\5\1\0046\5\v\0'\a\14\0B\5\2\0025\a\16\0005\b\15\0=\b\17\a5\b\18\0=\b\19\aB\5\2\2>\5\2\0046\5\v\0'\a\20\0B\5\2\0025\a\21\0B\5\2\0?\5\0\0=\4\23\3B\1\2\1K\0\1\0\radapters\1\0\0\1\0\2\fuse_lsp\2\fcommand\fflutter\17neotest-dart\targs\1\3\0\0\16--log-level\nDEBUG\bdap\1\0\2\vrunner\vpytest\vpython\21.venv/bin/python\1\0\1\15justMyCode\1\19neotest-python\15neotest-go\nsetup\frequire\17virtual_text\1\0\0\vformat\1\0\0\0\vconfig\15diagnostic\fneotest\26nvim_create_namespace\bapi\bvim\a€€À™\4\0" },
+    config = { "\27LJ\2\n|\0\1\6\0\b\0\0229\1\0\0\18\3\1\0009\1\1\1'\4\2\0'\5\3\0B\1\4\2\18\3\1\0009\1\1\1'\4\4\0'\5\3\0B\1\4\2\18\3\1\0009\1\1\1'\4\5\0'\5\3\0B\1\4\2\18\3\1\0009\1\1\1'\4\6\0'\5\a\0B\1\4\2L\1\2\0\5\t^%s+\b%s+\6\t\6 \6\n\tgsub\fmessageÄ\3\1\0\t\0\24\1,6\0\0\0009\0\1\0009\0\2\0'\2\3\0B\0\2\0026\1\0\0009\1\4\0019\1\5\0015\3\t\0005\4\a\0003\5\6\0=\5\b\4=\4\n\3\18\4\0\0B\1\3\0016\1\v\0'\3\3\0B\1\2\0029\1\f\0015\3\22\0004\4\4\0006\5\v\0'\a\r\0B\5\2\2>\5\1\0046\5\v\0'\a\14\0B\5\2\0025\a\16\0005\b\15\0=\b\17\a5\b\18\0=\b\19\aB\5\2\2>\5\2\0046\5\v\0'\a\20\0B\5\2\0025\a\21\0B\5\2\0?\5\0\0=\4\23\3B\1\2\1K\0\1\0\radapters\1\0\0\1\0\2\fcommand\fflutter\fuse_lsp\2\17neotest-dart\targs\1\3\0\0\16--log-level\nDEBUG\bdap\1\0\2\vrunner\vpytest\vpython\21.venv/bin/python\1\0\1\15justMyCode\1\19neotest-python\15neotest-go\nsetup\frequire\17virtual_text\1\0\0\vformat\1\0\0\0\vconfig\15diagnostic\fneotest\26nvim_create_namespace\bapi\bvim\a€€À™\4\0" },
     loaded = true,
     path = "/Users/sidharthpadhee/.local/share/nvim/site/pack/packer/start/neotest",
     url = "https://github.com/nvim-neotest/neotest"
@@ -198,8 +198,11 @@ _G.packer_plugins = {
     url = "https://github.com/mfussenegger/nvim-dap"
   },
   ["nvim-dap-go"] = {
-    loaded = true,
-    path = "/Users/sidharthpadhee/.local/share/nvim/site/pack/packer/start/nvim-dap-go",
+    config = { "\27LJ\2\n^\0\0\4\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\2B\0\2\1K\0\1\0\21ensure_installed\1\0\0\1\2\0\0\ngopls\nsetup\vdap-go\frequire\0" },
+    loaded = false,
+    needs_bufread = false,
+    only_cond = false,
+    path = "/Users/sidharthpadhee/.local/share/nvim/site/pack/packer/opt/nvim-dap-go",
     url = "https://github.com/leoluz/nvim-dap-go"
   },
   ["nvim-dap-ui"] = {
@@ -224,7 +227,7 @@ _G.packer_plugins = {
     url = "https://github.com/kylechui/nvim-surround"
   },
   ["nvim-tree.lua"] = {
-    config = { "\27LJ\2\nh\0\0\4\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\2B\0\2\1K\0\1\0\tview\1\0\0\1\0\2\nwidth\b20%\19relativenumber\2\nsetup\14nvim-tree\frequire\0" },
+    config = { "\27LJ\2\nh\0\0\4\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\2B\0\2\1K\0\1\0\tview\1\0\0\1\0\2\19relativenumber\2\nwidth\b22%\nsetup\14nvim-tree\frequire\0" },
     loaded = true,
     path = "/Users/sidharthpadhee/.local/share/nvim/site/pack/packer/start/nvim-tree.lua",
     url = "https://github.com/nvim-tree/nvim-tree.lua"
@@ -245,7 +248,7 @@ _G.packer_plugins = {
     url = "https://github.com/nvim-tree/nvim-web-devicons"
   },
   ["oil.nvim"] = {
-    config = { "\27LJ\2\nƒ\1\0\0\4\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0005\3\4\0=\3\5\2B\0\2\1K\0\1\0\nfloat\1\0\3\fpadding\3\2\15max_height\3(\14max_width\3d\1\0\1\26default_file_explorer\1\nsetup\boil\frequire\0" },
+    config = { "\27LJ\2\nƒ\1\0\0\4\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0005\3\4\0=\3\5\2B\0\2\1K\0\1\0\nfloat\1\0\3\15max_height\3(\fpadding\3\2\14max_width\3d\1\0\1\26default_file_explorer\1\nsetup\boil\frequire\0" },
     loaded = true,
     path = "/Users/sidharthpadhee/.local/share/nvim/site/pack/packer/start/oil.nvim",
     url = "https://github.com/stevearc/oil.nvim"
@@ -256,7 +259,7 @@ _G.packer_plugins = {
     url = "https://github.com/tyru/open-browser.vim"
   },
   ["other.nvim"] = {
-    config = { "\27LJ\2\n™\4\0\0\5\0\r\0\0236\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\t\0004\3\a\0005\4\3\0>\4\1\0035\4\4\0>\4\2\0035\4\5\0>\4\3\0035\4\6\0>\4\4\0035\4\a\0>\4\5\0035\4\b\0>\4\6\3=\3\n\0025\3\v\0=\3\f\2B\0\2\1K\0\1\0\nstyle\1\0\4\14seperator\6|\nwidth\4æÌ™³\6æÌ™ÿ\3\vborder\nsolid\14minHeight\3\2\rmappings\1\0\0\1\0\3\vtarget\f%1.dart\fpattern\20(.*)_test.dart$\fcontext\rgototest\1\0\3\vtarget\17%1_test.dart\fpattern\15(.*).dart$\fcontext\rgototest\1\0\3\vtarget\n%1.py\fpattern\18(.*)_test.py$\fcontext\rgototest\1\0\3\vtarget\15%1_test.py\fpattern\r(.*).py$\fcontext\rgototest\1\0\3\vtarget\n%1.go\fpattern\18(.*)_test.go$\fcontext\rgototest\1\0\3\vtarget\15%1_test.go\fpattern\r(.*).go$\fcontext\rgototest\nsetup\15other-nvim\frequire\0" },
+    config = { "\27LJ\2\n¢\5\0\0\5\0\15\0\0276\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\v\0004\3\t\0005\4\3\0>\4\1\0035\4\4\0>\4\2\0035\4\5\0>\4\3\0035\4\6\0>\4\4\0035\4\a\0>\4\5\0035\4\b\0>\4\6\0035\4\t\0>\4\a\0035\4\n\0>\4\b\3=\3\f\0025\3\r\0=\3\14\2B\0\2\1K\0\1\0\nstyle\1\0\4\nwidth\4æÌ™³\6æÌ™ÿ\3\vborder\nsolid\14minHeight\3\2\14seperator\6|\rmappings\1\0\0\1\0\3\vtarget\n%1.sh\fpattern\15(.*).json$\fcontext\22open json request\1\0\3\vtarget\f%1.json\fpattern\r(.*).sh$\fcontext\21open sh response\1\0\3\vtarget\f%1.dart\fpattern\20(.*)_test.dart$\fcontext\rgototest\1\0\3\vtarget\17%1_test.dart\fpattern\15(.*).dart$\fcontext\rgototest\1\0\3\vtarget\n%1.py\fpattern\18(.*)_test.py$\fcontext\rgototest\1\0\3\vtarget\15%1_test.py\fpattern\r(.*).py$\fcontext\rgototest\1\0\3\vtarget\n%1.go\fpattern\18(.*)_test.go$\fcontext\rgototest\1\0\3\vtarget\15%1_test.go\fpattern\r(.*).go$\fcontext\rgototest\nsetup\15other-nvim\frequire\0" },
     loaded = true,
     path = "/Users/sidharthpadhee/.local/share/nvim/site/pack/packer/start/other.nvim",
     url = "https://github.com/rgroli/other.nvim"
@@ -267,7 +270,7 @@ _G.packer_plugins = {
     url = "https://github.com/wbthomason/packer.nvim"
   },
   ["plantuml-previewer.vim"] = {
-    config = { "\27LJ\2\nä\3\0\0\4\0\18\0%6\0\0\0009\0\1\0'\1\3\0=\1\2\0006\0\0\0009\0\1\0006\1\0\0009\1\5\0019\1\6\1'\3\a\0B\1\2\2=\1\4\0006\0\0\0009\0\1\0)\1\1\0=\1\b\0006\0\0\0009\0\1\0)\1\1\0=\1\t\0006\0\0\0009\0\1\0'\1\v\0=\1\n\0006\0\0\0009\0\1\0'\1\r\0=\1\f\0006\0\0\0009\0\1\0'\1\15\0=\1\14\0006\0\0\0009\0\1\0005\1\17\0=\1\16\0K\0\1\0\1\0\2\fpreview\t<F5>\frefresh\t<F6>\30plantuml_preview_mappings\19-charset UTF-8\26plantuml_preview_args\rplantuml\25plantuml_preview_cmd\bdot\25plantuml_preview_dot2plantuml_preview_open_output_file_auto_delete&plantuml_preview_open_output_file\22~/.cache/plantuml\vexpand\afn&plantuml_preview_output_directory\bpng\"plantuml_preview_image_format\6g\bvim\0" },
+    config = { "\27LJ\2\nä\3\0\0\4\0\18\0%6\0\0\0009\0\1\0'\1\3\0=\1\2\0006\0\0\0009\0\1\0006\1\0\0009\1\5\0019\1\6\1'\3\a\0B\1\2\2=\1\4\0006\0\0\0009\0\1\0)\1\1\0=\1\b\0006\0\0\0009\0\1\0)\1\1\0=\1\t\0006\0\0\0009\0\1\0'\1\v\0=\1\n\0006\0\0\0009\0\1\0'\1\r\0=\1\f\0006\0\0\0009\0\1\0'\1\15\0=\1\14\0006\0\0\0009\0\1\0005\1\17\0=\1\16\0K\0\1\0\1\0\2\frefresh\t<F6>\fpreview\t<F5>\30plantuml_preview_mappings\19-charset UTF-8\26plantuml_preview_args\rplantuml\25plantuml_preview_cmd\bdot\25plantuml_preview_dot2plantuml_preview_open_output_file_auto_delete&plantuml_preview_open_output_file\22~/.cache/plantuml\vexpand\afn&plantuml_preview_output_directory\bpng\"plantuml_preview_image_format\6g\bvim\0" },
     loaded = true,
     path = "/Users/sidharthpadhee/.local/share/nvim/site/pack/packer/start/plantuml-previewer.vim",
     url = "https://github.com/weirongxu/plantuml-previewer.vim"
@@ -283,7 +286,7 @@ _G.packer_plugins = {
     url = "https://github.com/nvim-lua/plenary.nvim"
   },
   ["symbols-outline.nvim"] = {
-    config = { "\27LJ\2\nŽ\1\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\4\26show_relative_numbers\2\17show_numbers\2\16show_guides\2\27highlight_hovered_item\2\nsetup\20symbols-outline\frequire\0" },
+    config = { "\27LJ\2\nŽ\1\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\4\17show_numbers\2\16show_guides\2\27highlight_hovered_item\2\26show_relative_numbers\2\nsetup\20symbols-outline\frequire\0" },
     loaded = true,
     path = "/Users/sidharthpadhee/.local/share/nvim/site/pack/packer/start/symbols-outline.nvim",
     url = "https://github.com/simrat39/symbols-outline.nvim"
@@ -322,46 +325,53 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
+-- Config for: symbols-outline.nvim
+time([[Config for symbols-outline.nvim]], true)
+try_loadstring("\27LJ\2\nŽ\1\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\4\17show_numbers\2\16show_guides\2\27highlight_hovered_item\2\26show_relative_numbers\2\nsetup\20symbols-outline\frequire\0", "config", "symbols-outline.nvim")
+time([[Config for symbols-outline.nvim]], false)
+-- Config for: plantuml-previewer.vim
+time([[Config for plantuml-previewer.vim]], true)
+try_loadstring("\27LJ\2\nä\3\0\0\4\0\18\0%6\0\0\0009\0\1\0'\1\3\0=\1\2\0006\0\0\0009\0\1\0006\1\0\0009\1\5\0019\1\6\1'\3\a\0B\1\2\2=\1\4\0006\0\0\0009\0\1\0)\1\1\0=\1\b\0006\0\0\0009\0\1\0)\1\1\0=\1\t\0006\0\0\0009\0\1\0'\1\v\0=\1\n\0006\0\0\0009\0\1\0'\1\r\0=\1\f\0006\0\0\0009\0\1\0'\1\15\0=\1\14\0006\0\0\0009\0\1\0005\1\17\0=\1\16\0K\0\1\0\1\0\2\frefresh\t<F6>\fpreview\t<F5>\30plantuml_preview_mappings\19-charset UTF-8\26plantuml_preview_args\rplantuml\25plantuml_preview_cmd\bdot\25plantuml_preview_dot2plantuml_preview_open_output_file_auto_delete&plantuml_preview_open_output_file\22~/.cache/plantuml\vexpand\afn&plantuml_preview_output_directory\bpng\"plantuml_preview_image_format\6g\bvim\0", "config", "plantuml-previewer.vim")
+time([[Config for plantuml-previewer.vim]], false)
 -- Config for: ChatGPT.nvim
 time([[Config for ChatGPT.nvim]], true)
 try_loadstring("\27LJ\2\nn\0\0\4\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\2B\0\2\1K\0\1\0\18openai_params\1\0\0\1\0\1\nmodel\23gpt-3.5-turbo-0301\nsetup\fchatgpt\frequire\0", "config", "ChatGPT.nvim")
 time([[Config for ChatGPT.nvim]], false)
--- Config for: plantuml-previewer.vim
-time([[Config for plantuml-previewer.vim]], true)
-try_loadstring("\27LJ\2\nä\3\0\0\4\0\18\0%6\0\0\0009\0\1\0'\1\3\0=\1\2\0006\0\0\0009\0\1\0006\1\0\0009\1\5\0019\1\6\1'\3\a\0B\1\2\2=\1\4\0006\0\0\0009\0\1\0)\1\1\0=\1\b\0006\0\0\0009\0\1\0)\1\1\0=\1\t\0006\0\0\0009\0\1\0'\1\v\0=\1\n\0006\0\0\0009\0\1\0'\1\r\0=\1\f\0006\0\0\0009\0\1\0'\1\15\0=\1\14\0006\0\0\0009\0\1\0005\1\17\0=\1\16\0K\0\1\0\1\0\2\fpreview\t<F5>\frefresh\t<F6>\30plantuml_preview_mappings\19-charset UTF-8\26plantuml_preview_args\rplantuml\25plantuml_preview_cmd\bdot\25plantuml_preview_dot2plantuml_preview_open_output_file_auto_delete&plantuml_preview_open_output_file\22~/.cache/plantuml\vexpand\afn&plantuml_preview_output_directory\bpng\"plantuml_preview_image_format\6g\bvim\0", "config", "plantuml-previewer.vim")
-time([[Config for plantuml-previewer.vim]], false)
--- Config for: hop.nvim
-time([[Config for hop.nvim]], true)
-try_loadstring("\27LJ\2\n[\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\1\tkeys\"asdfghjkl;zxcvbnm,.qwertyuiop\nsetup\bhop\frequire\0", "config", "hop.nvim")
-time([[Config for hop.nvim]], false)
 -- Config for: oil.nvim
 time([[Config for oil.nvim]], true)
-try_loadstring("\27LJ\2\nƒ\1\0\0\4\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0005\3\4\0=\3\5\2B\0\2\1K\0\1\0\nfloat\1\0\3\fpadding\3\2\15max_height\3(\14max_width\3d\1\0\1\26default_file_explorer\1\nsetup\boil\frequire\0", "config", "oil.nvim")
+try_loadstring("\27LJ\2\nƒ\1\0\0\4\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0005\3\4\0=\3\5\2B\0\2\1K\0\1\0\nfloat\1\0\3\15max_height\3(\fpadding\3\2\14max_width\3d\1\0\1\26default_file_explorer\1\nsetup\boil\frequire\0", "config", "oil.nvim")
 time([[Config for oil.nvim]], false)
--- Config for: treesj
-time([[Config for treesj]], true)
-try_loadstring("\27LJ\2\nP\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\1\24use_default_keymaps\1\nsetup\vtreesj\frequire\0", "config", "treesj")
-time([[Config for treesj]], false)
--- Config for: neotest
-time([[Config for neotest]], true)
-try_loadstring("\27LJ\2\n|\0\1\6\0\b\0\0229\1\0\0\18\3\1\0009\1\1\1'\4\2\0'\5\3\0B\1\4\2\18\3\1\0009\1\1\1'\4\4\0'\5\3\0B\1\4\2\18\3\1\0009\1\1\1'\4\5\0'\5\3\0B\1\4\2\18\3\1\0009\1\1\1'\4\6\0'\5\a\0B\1\4\2L\1\2\0\5\t^%s+\b%s+\6\t\6 \6\n\tgsub\fmessageÄ\3\1\0\t\0\24\1,6\0\0\0009\0\1\0009\0\2\0'\2\3\0B\0\2\0026\1\0\0009\1\4\0019\1\5\0015\3\t\0005\4\a\0003\5\6\0=\5\b\4=\4\n\3\18\4\0\0B\1\3\0016\1\v\0'\3\3\0B\1\2\0029\1\f\0015\3\22\0004\4\4\0006\5\v\0'\a\r\0B\5\2\2>\5\1\0046\5\v\0'\a\14\0B\5\2\0025\a\16\0005\b\15\0=\b\17\a5\b\18\0=\b\19\aB\5\2\2>\5\2\0046\5\v\0'\a\20\0B\5\2\0025\a\21\0B\5\2\0?\5\0\0=\4\23\3B\1\2\1K\0\1\0\radapters\1\0\0\1\0\2\fuse_lsp\2\fcommand\fflutter\17neotest-dart\targs\1\3\0\0\16--log-level\nDEBUG\bdap\1\0\2\vrunner\vpytest\vpython\21.venv/bin/python\1\0\1\15justMyCode\1\19neotest-python\15neotest-go\nsetup\frequire\17virtual_text\1\0\0\vformat\1\0\0\0\vconfig\15diagnostic\fneotest\26nvim_create_namespace\bapi\bvim\a€€À™\4\0", "config", "neotest")
-time([[Config for neotest]], false)
--- Config for: nvim-tree.lua
-time([[Config for nvim-tree.lua]], true)
-try_loadstring("\27LJ\2\nh\0\0\4\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\2B\0\2\1K\0\1\0\tview\1\0\0\1\0\2\nwidth\b20%\19relativenumber\2\nsetup\14nvim-tree\frequire\0", "config", "nvim-tree.lua")
-time([[Config for nvim-tree.lua]], false)
--- Config for: symbols-outline.nvim
-time([[Config for symbols-outline.nvim]], true)
-try_loadstring("\27LJ\2\nŽ\1\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\4\26show_relative_numbers\2\17show_numbers\2\16show_guides\2\27highlight_hovered_item\2\nsetup\20symbols-outline\frequire\0", "config", "symbols-outline.nvim")
-time([[Config for symbols-outline.nvim]], false)
--- Config for: other.nvim
-time([[Config for other.nvim]], true)
-try_loadstring("\27LJ\2\n™\4\0\0\5\0\r\0\0236\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\t\0004\3\a\0005\4\3\0>\4\1\0035\4\4\0>\4\2\0035\4\5\0>\4\3\0035\4\6\0>\4\4\0035\4\a\0>\4\5\0035\4\b\0>\4\6\3=\3\n\0025\3\v\0=\3\f\2B\0\2\1K\0\1\0\nstyle\1\0\4\14seperator\6|\nwidth\4æÌ™³\6æÌ™ÿ\3\vborder\nsolid\14minHeight\3\2\rmappings\1\0\0\1\0\3\vtarget\f%1.dart\fpattern\20(.*)_test.dart$\fcontext\rgototest\1\0\3\vtarget\17%1_test.dart\fpattern\15(.*).dart$\fcontext\rgototest\1\0\3\vtarget\n%1.py\fpattern\18(.*)_test.py$\fcontext\rgototest\1\0\3\vtarget\15%1_test.py\fpattern\r(.*).py$\fcontext\rgototest\1\0\3\vtarget\n%1.go\fpattern\18(.*)_test.go$\fcontext\rgototest\1\0\3\vtarget\15%1_test.go\fpattern\r(.*).go$\fcontext\rgototest\nsetup\15other-nvim\frequire\0", "config", "other.nvim")
-time([[Config for other.nvim]], false)
 -- Config for: nvim-surround
 time([[Config for nvim-surround]], true)
 try_loadstring("\27LJ\2\n?\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\18nvim-surround\frequire\0", "config", "nvim-surround")
 time([[Config for nvim-surround]], false)
+-- Config for: neotest
+time([[Config for neotest]], true)
+try_loadstring("\27LJ\2\n|\0\1\6\0\b\0\0229\1\0\0\18\3\1\0009\1\1\1'\4\2\0'\5\3\0B\1\4\2\18\3\1\0009\1\1\1'\4\4\0'\5\3\0B\1\4\2\18\3\1\0009\1\1\1'\4\5\0'\5\3\0B\1\4\2\18\3\1\0009\1\1\1'\4\6\0'\5\a\0B\1\4\2L\1\2\0\5\t^%s+\b%s+\6\t\6 \6\n\tgsub\fmessageÄ\3\1\0\t\0\24\1,6\0\0\0009\0\1\0009\0\2\0'\2\3\0B\0\2\0026\1\0\0009\1\4\0019\1\5\0015\3\t\0005\4\a\0003\5\6\0=\5\b\4=\4\n\3\18\4\0\0B\1\3\0016\1\v\0'\3\3\0B\1\2\0029\1\f\0015\3\22\0004\4\4\0006\5\v\0'\a\r\0B\5\2\2>\5\1\0046\5\v\0'\a\14\0B\5\2\0025\a\16\0005\b\15\0=\b\17\a5\b\18\0=\b\19\aB\5\2\2>\5\2\0046\5\v\0'\a\20\0B\5\2\0025\a\21\0B\5\2\0?\5\0\0=\4\23\3B\1\2\1K\0\1\0\radapters\1\0\0\1\0\2\fcommand\fflutter\fuse_lsp\2\17neotest-dart\targs\1\3\0\0\16--log-level\nDEBUG\bdap\1\0\2\vrunner\vpytest\vpython\21.venv/bin/python\1\0\1\15justMyCode\1\19neotest-python\15neotest-go\nsetup\frequire\17virtual_text\1\0\0\vformat\1\0\0\0\vconfig\15diagnostic\fneotest\26nvim_create_namespace\bapi\bvim\a€€À™\4\0", "config", "neotest")
+time([[Config for neotest]], false)
+-- Config for: nvim-tree.lua
+time([[Config for nvim-tree.lua]], true)
+try_loadstring("\27LJ\2\nh\0\0\4\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\2B\0\2\1K\0\1\0\tview\1\0\0\1\0\2\19relativenumber\2\nwidth\b22%\nsetup\14nvim-tree\frequire\0", "config", "nvim-tree.lua")
+time([[Config for nvim-tree.lua]], false)
+-- Config for: treesj
+time([[Config for treesj]], true)
+try_loadstring("\27LJ\2\nP\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\1\24use_default_keymaps\1\nsetup\vtreesj\frequire\0", "config", "treesj")
+time([[Config for treesj]], false)
+-- Config for: hop.nvim
+time([[Config for hop.nvim]], true)
+try_loadstring("\27LJ\2\n[\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\1\tkeys\"asdfghjkl;zxcvbnm,.qwertyuiop\nsetup\bhop\frequire\0", "config", "hop.nvim")
+time([[Config for hop.nvim]], false)
+-- Config for: other.nvim
+time([[Config for other.nvim]], true)
+try_loadstring("\27LJ\2\n¢\5\0\0\5\0\15\0\0276\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\v\0004\3\t\0005\4\3\0>\4\1\0035\4\4\0>\4\2\0035\4\5\0>\4\3\0035\4\6\0>\4\4\0035\4\a\0>\4\5\0035\4\b\0>\4\6\0035\4\t\0>\4\a\0035\4\n\0>\4\b\3=\3\f\0025\3\r\0=\3\14\2B\0\2\1K\0\1\0\nstyle\1\0\4\nwidth\4æÌ™³\6æÌ™ÿ\3\vborder\nsolid\14minHeight\3\2\14seperator\6|\rmappings\1\0\0\1\0\3\vtarget\n%1.sh\fpattern\15(.*).json$\fcontext\22open json request\1\0\3\vtarget\f%1.json\fpattern\r(.*).sh$\fcontext\21open sh response\1\0\3\vtarget\f%1.dart\fpattern\20(.*)_test.dart$\fcontext\rgototest\1\0\3\vtarget\17%1_test.dart\fpattern\15(.*).dart$\fcontext\rgototest\1\0\3\vtarget\n%1.py\fpattern\18(.*)_test.py$\fcontext\rgototest\1\0\3\vtarget\15%1_test.py\fpattern\r(.*).py$\fcontext\rgototest\1\0\3\vtarget\n%1.go\fpattern\18(.*)_test.go$\fcontext\rgototest\1\0\3\vtarget\15%1_test.go\fpattern\r(.*).go$\fcontext\rgototest\nsetup\15other-nvim\frequire\0", "config", "other.nvim")
+time([[Config for other.nvim]], false)
+vim.cmd [[augroup packer_load_aucmds]]
+vim.cmd [[au!]]
+  -- Filetype lazy-loads
+time([[Defining lazy-load filetype autocommands]], true)
+vim.cmd [[au FileType go ++once lua require("packer.load")({'nvim-dap-go'}, { ft = "go" }, _G.packer_plugins)]]
+time([[Defining lazy-load filetype autocommands]], false)
+vim.cmd("augroup END")
 
 _G._packer.inside_compile = false
 if _G._packer.needs_bufread == true then

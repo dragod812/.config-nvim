@@ -21,7 +21,10 @@ return require('packer').startup(function(use)
     use("mbbill/undotree")
     use("tpope/vim-fugitive")
     use("github/copilot.vim")
-    use('nvim-treesitter/nvim-treesitter')
+    use {
+        'nvim-treesitter/nvim-treesitter',
+        run = ':TSUpdate'
+    }
     use('nvim-treesitter/nvim-treesitter-context')
     -- install gounit binary - go install  github.com/hexdigest/gounit/cmd/gounit@latest
     use('hexdigest/gounit-vim')
@@ -78,7 +81,7 @@ return require('packer').startup(function(use)
         config = function()
             require("nvim-tree").setup {
                 view = {
-                    width = "20%",
+                    width = "22%",
                     relativenumber = true,
                 }
             }
@@ -135,6 +138,17 @@ return require('packer').startup(function(use)
                         target = "%1.dart",
                         context = "gototest"
                     },
+                    {
+                        pattern = "(.*).sh$",
+                        target = "%1.json",
+                        context = "open sh response"
+                    },
+                    {
+                        pattern = "(.*).json$",
+                        target = "%1.sh",
+                        context = "open json request"
+                    },
+
                 },
                 style = {
                     -- How the plugin paints its window borders
@@ -282,7 +296,26 @@ return require('packer').startup(function(use)
             })
         end,
     })
-    use 'mfussenegger/nvim-dap'
+    use {
+        'mfussenegger/nvim-dap',
+        init = function()
+            -- require("core.utils").load_mappings("dap")
+        end
+    }
+    use {
+        'leoluz/nvim-dap-go',
+        ft = { 'go' },
+        requires = {
+            'mfussenegger/nvim-dap',
+        },
+        config = function()
+            require('dap-go').setup({
+                ensure_installed = {
+                    "gopls",
+                },
+            })
+            -- require("core.utils").load_mappings("dap_go")
+        end
+    }
     use { "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } }
-    use 'leoluz/nvim-dap-go'
 end)

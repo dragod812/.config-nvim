@@ -87,3 +87,6 @@ vim.keymap.set("n", "<leader>s", ":vsplit<CR><C-w>l")
 
 -- write file
 vim.keymap.set({ "n", "v", "i" }, "<C-s>", ":w<CR>")
+
+-- execute file 
+vim.keymap.set({ "n"}, "<leader>de", ":!%<CR>")
