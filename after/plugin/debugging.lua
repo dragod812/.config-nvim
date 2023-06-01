@@ -4,6 +4,9 @@ vim.keymap.set("n", "<leader>tc", "<cmd> DapContinue <CR>")
 vim.keymap.set("n", "<leader>tso", "<cmd> DapStepOver <CR>")
 vim.keymap.set("n", "<leader>tsO", "<cmd> DapStepOut <CR>")
 vim.keymap.set("n", "<leader>tsi", "<cmd> DapStepInto <CR>")
+vim.keymap.set("n", "<leader>tx", "<cmd> DapTerminate <CR>")
+
+
 -- Open debugging sidebar
 vim.keymap.set("n", "<leader>tv", function()
     local widgets = require('dap.ui.widgets');
