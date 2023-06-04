@@ -1,6 +1,6 @@
 {{$func := .Func}}
 
-func Test{{ $func.Name }}(t *testing.T) {
+func Test_{{ $func.Name }}(t *testing.T) {
     t.Parallel()
 	tests := []struct {
 		name string

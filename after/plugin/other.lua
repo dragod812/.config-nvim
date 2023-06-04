@@ -1,2 +1,2 @@
-vim.keymap.set("n", "gt", vim.cmd.Other, { noremap = true, silent = true })
+vim.keymap.set("n", "<C-t>", vim.cmd.Other, { noremap = true, silent = true })
 
