@@ -87,17 +87,26 @@ require('lspconfig').gopls.setup({
     },
 })
 
-require'lspconfig'.pylsp.setup{
-  settings = {
-    pylsp = {
-      plugins = {
-        pycodestyle = {
-          ignore = {'W391'},
-          maxLineLength = 120
+require 'lspconfig'.pylsp.setup {
+    settings = {
+        pylsp = {
+            plugins = {
+                pyflakes = { enabled = false },
+                pycodestyle = {
+                    ignore = { 'W391' },
+                },
+                pylint = {
+                    enabled = true,
+                    ignore = { 'E0401' }
+                },
+                flake8 = {
+                    enabled = true,
+                    ignore = { 'E501', 'E999', 'R0903' , 'E0401' }
+                },
+                black = { enabled = true }
+            }
         }
-      }
     }
-  }
 }
 
 lsp.setup()

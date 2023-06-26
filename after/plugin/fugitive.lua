@@ -39,3 +39,8 @@ vim.keymap.set("n", "gp", "]c")
 
 vim.keymap.set("n", "<leader>h", "<cmd>diffget //2<CR>")
 vim.keymap.set("n", "<leader>l", "<cmd>diffget //3<CR>")
+
+vim.keymap.set("n", "<leader>gz0", ':Git stash apply stash@{0}<CR>')
+vim.keymap.set("n", "<leader>gz1", ':Git stash apply stash@{1}<CR>')
+vim.keymap.set("n", "<leader>gz2", ':Git stash apply stash@{2}<CR>')
+
