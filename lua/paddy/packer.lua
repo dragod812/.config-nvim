@@ -12,10 +12,11 @@ return require('packer').startup(function(use)
         requires = { { 'nvim-lua/plenary.nvim' } }
     }
 
-    use {
-        'lalitmee/cobalt2.nvim',
-        requires = 'tjdevries/colorbuddy.nvim',
-    }
+    -- use {
+    --     'lalitmee/cobalt2.nvim',
+    --     requires = 'tjdevries/colorbuddy.nvim',
+    -- }
+    use { "catppuccin/nvim", as = "catppuccin" }
 
     use('theprimeagen/harpoon')
     use("mbbill/undotree")
@@ -105,6 +106,9 @@ return require('packer').startup(function(use)
                         padding = 2,
                         max_width = 100,
                         max_height = 40
+                    },
+                    view_options = {
+                        show_hidden = true,
                     }
                 }
             )
@@ -129,12 +133,12 @@ return require('packer').startup(function(use)
                     {
                         pattern = "(.*).py$",
                         target = "%1_test.py",
-                        context = "gototest"
+                        context = "pythongototest"
                     },
                     {
                         pattern = "(.*)_test.py$",
                         target = "%1.py",
-                        context = "gototest"
+                        context = "pythongototest"
                     },
                     {
                         pattern = "(.*).dart$",
@@ -306,9 +310,6 @@ return require('packer').startup(function(use)
     })
     use {
         'mfussenegger/nvim-dap',
-        init = function()
-            -- require("core.utils").load_mappings("dap")
-        end
     }
     use {
         'leoluz/nvim-dap-go',
@@ -326,4 +327,16 @@ return require('packer').startup(function(use)
         end
     }
     use { "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } }
+    use {
+        'mfussenegger/nvim-dap-python',
+        ft = { 'python' },
+        requires = {
+            'mfussenegger/nvim-dap',
+            'rcarriga/nvim-dap-ui'
+        },
+        config = function()
+            -- install debugpy from mason
+            require('dap-python').setup('~/.local/share/nvim/mason/packages/debugpy/venv/bin/python')
+        end
+    }
 end)

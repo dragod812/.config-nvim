@@ -70,7 +70,7 @@ vim.keymap.set("n", "<leader>C", ":let @\"=expand('%:p')<CR>")
 vim.keymap.set("n", "<leader>c", "::let @\"=expand('%', ':p:h:t')<CR>")
 
 -- open current folder
-vim.keymap.set("n", "gf", ":Oil --float<CR>")
+vim.keymap.set("n", "gf", ":Oil --float<CR>:set relativenumber<CR>")
 
 -- open terminal in new tab
 -- run <C-\><C-n> to enter normal mode to exit terminal
@@ -90,3 +90,9 @@ vim.keymap.set({ "n", "v", "i" }, "<C-s>", ":w<CR>")
 
 -- execute file 
 vim.keymap.set({ "n"}, "<leader>de", ":!%<CR>")
+
+-- format json
+vim.keymap.set({ "n" }, "<leader>vjq", ":%! jq .<CR>")
+vim.keymap.set({ "v" }, "<leader>vjq", ":'<,'>%! jq .<CR>")
+
+vim.keymap.set({ "v" }, "<leader>vjc", ":'<,'>%!jq 'del(.alert.typeMeta, .alert.metadata.creationTimestamp, .alert.metadata.annotations, .alert.metadata.clusterName, .alert.metadata.managedFields, .alert.metadata.finalizers, .alert.status.conditions, .alert.metadata.labels.\"michelangelo/UpdateTimestamp\", .alert.metadata.labels.\"michelangelo/SpecUpdateTimestamp\")'")
