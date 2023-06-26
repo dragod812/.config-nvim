@@ -30,6 +30,11 @@ return require('packer').startup(function(use)
     -- install gounit binary - go install  github.com/hexdigest/gounit/cmd/gounit@latest
     use('hexdigest/gounit-vim')
     use('ojroques/vim-oscyank')
+
+    -- bazel support
+    use('google/vim-maktaba')
+    use('bazelbuild/vim-bazel')
+
     use('gennaro-tedesco/nvim-peekup')
 
 
