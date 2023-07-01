@@ -43,8 +43,6 @@ return require('packer').startup(function(use)
     use('google/vim-maktaba')
     use('bazelbuild/vim-bazel')
 
-    use('gennaro-tedesco/nvim-peekup')
-
     use {
         'VonHeikemen/lsp-zero.nvim',
         branch = 'v2.x',
