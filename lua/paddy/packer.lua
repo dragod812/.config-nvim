@@ -31,22 +31,19 @@ return require('packer').startup(function(use)
     use('hexdigest/gounit-vim')
     use('ojroques/vim-oscyank')
 
+    -- flash.nvim
+    use {
+        "folke/flash.nvim",
+        config = function()
+            require("flash").setup()
+        end
+    }
+
     -- bazel support
     use('google/vim-maktaba')
     use('bazelbuild/vim-bazel')
 
     use('gennaro-tedesco/nvim-peekup')
-
-
-
-    use {
-        'phaazon/hop.nvim',
-        branch = 'v2', -- optional but strongly recommended
-        config = function()
-            -- you can configure Hop the way you like here; see :h hop-config
-            require 'hop'.setup { keys = 'asdfghjkl;zxcvbnm,.qwertyuiop' }
-        end
-    }
 
     use {
         'VonHeikemen/lsp-zero.nvim',
@@ -97,7 +94,8 @@ return require('packer').startup(function(use)
                 view = {
                     width = "22%",
                     relativenumber = true,
-                }
+                },
+                remove_keymaps = { "s" }
             }
         end
     }
