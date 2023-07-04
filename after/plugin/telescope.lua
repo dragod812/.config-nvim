@@ -12,6 +12,7 @@ local method_opts = {
 vim.keymap.set('n', '<leader>dm', function()
     builtin.lsp_document_symbols(method_opts)
 end)
+vim.keymap.set('n', '<leader>ds', builtin.current_buffer_fuzzy_find, {})
 
 local field_opts = {
     symbols = {
@@ -41,6 +42,11 @@ end)
 vim.keymap.set('n', '<leader>pf', builtin.find_files, {})
 vim.keymap.set('n', '<leader>po', builtin.lsp_dynamic_workspace_symbols, {})
 vim.keymap.set('n', '<leader>pb', builtin.buffers, {})
+vim.keymap.set('n', '<leader>pj', function ()
+    builtin.jumplist({
+        show_line = false,
+    })
+end, {})
 vim.keymap.set('n', '<C-p>', builtin.git_files, {})
 vim.keymap.set('n', '<leader>ps', function()
     builtin.grep_string({ search = vim.fn.input("Grep > ") });
