@@ -8,7 +8,8 @@ lsp.ensure_installed({
     'yamlls',
     'bashls',
     'jdtls',
-    'clangd'
+    'clangd',
+    'sqlls',
 })
 
 -- Fix Undefined global 'vim'
@@ -58,7 +59,9 @@ lsp.on_attach(function(client, bufnr)
     vim.keymap.set("n", "go", function() vim.lsp.buf.document_symbol() end, opts)
     vim.keymap.set("n", "gl", "<C-w>l", opts)
     vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
-    vim.keymap.set("n", "<leader>vf", function() vim.diagnostic.open_float() end, opts)
+    vim.keymap.set("n", "<leader>i", function() vim.diagnostic.goto_next() end, opts)
+    vim.keymap.set("n", "<leader>I", function() vim.diagnostic.goto_prev() end, opts)
+    vim.keymap.set("n", "<leader>vi", function() vim.diagnostic.open_float() end, opts)
     vim.keymap.set("n", "<leader>vd", function() vim.diagnostic.setloclist() end, opts)
     vim.keymap.set("n", "]d", function() vim.diagnostic.goto_next() end, opts)
     vim.keymap.set("n", "[d", function() vim.diagnostic.goto_prev() end, opts)

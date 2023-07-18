@@ -1,0 +1,102 @@
+vim.keymap.set('n', '<leader>w', ':WhichKey<CR>', {})
+local wk = require("which-key")
+wk.register({
+    ["<leader>"] = {
+        a = "Harpoon Add",
+        c = "Copy relative path",
+        C = "Copy abs path",
+        d = {
+            name = "Document",
+            c = "Classes",
+            m = "Methods",
+            o = "Outline",
+            s = "Search",
+            v = "Variables",
+        },
+        e = "Harpoon Edit",
+        f = "Format",
+        g = {
+            name = "Git",
+            b = "Blame",
+            c = "Checkout",
+            d = "Diff",
+            D = "Close Diff",
+            l = "Log",
+            p = "Pull",
+            P = "Push",
+            r = "Rebase",
+            s = "Status",
+        },
+        i = "Next Issue",
+        I = "Prev Issue",
+        j = "Quick Next",
+        J = "Errors Next",
+        k = "Quick Prev",
+        K = "Errors Prev",
+        m = "Maximize Buffer",
+        M = "Equal Width",
+        n = {
+            name = "New File",
+            x = { "<cmd>new<cr>", "New Horizontal File" },
+            v = { "<cmd>vnew<cr>", "New Vertical File" },
+        },
+        o = "Outline",
+        p = {
+            name = "Project",
+            f = "Files",
+            j = "Jumplist",
+            s = "Search",
+        },
+        r = "Run",
+        s = { ":vsplit<CR><C-w>l", "Split File" },
+        t = {
+            name = "Test",
+            b = "Breakpoint",
+            c = "Continue",
+            d = {
+                name = "Debug Test",
+                l = "Last Test",
+            },
+            s = {
+                name = "Step",
+                n = "Over",
+                i = "Into",
+                o = "Out",
+            },
+            x = "Stop",
+            v = "View Variables",
+        },
+        u = "Undo Tree",
+        v = {
+            name = "Code Actions",
+            a = "Actions",
+            c = "Comment",
+            d = "Diagnostics",
+            i = "See Issue",
+            l = "LSP Restart",
+            j = {
+                "JSON Actions",
+                {
+                    name = "JSON",
+                    f = "Format",
+                    c = "Clean",
+                    u = "Count Unique",
+                },
+            },
+            s = {
+                "SQL Actions",
+                {
+                    name = "SQL",
+                    f = "Format",
+                    c = "Clean",
+                },
+            },
+            r = "Rename",
+            t = "Generate Go Test",
+        },
+        x = "File Explorer",
+        z = "Zen Mode",
+        ["<leader>"] = "Opened Buffers",
+        ["<CR>"] = "Find File"
+    }
+}, {})

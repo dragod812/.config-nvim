@@ -1,4 +1,9 @@
+require("telescope").load_extension("recent_files")
 local builtin = require('telescope.builtin')
+local extensions = require('telescope').extensions
+
+-- independent
+vim.keymap.set('n', '<leader><leader>', builtin.buffers, {})
 
 -- Document related keybindings
 vim.keymap.set('n', '<leader>do', builtin.lsp_document_symbols, {})
@@ -41,7 +46,6 @@ end)
 -- Project related keybindings
 vim.keymap.set('n', '<leader>pf', builtin.find_files, {})
 vim.keymap.set('n', '<leader>po', builtin.lsp_dynamic_workspace_symbols, {})
-vim.keymap.set('n', '<leader>pb', builtin.buffers, {})
 vim.keymap.set('n', '<leader>pj', function ()
     builtin.jumplist({
         show_line = false,
@@ -62,3 +66,7 @@ vim.keymap.set('n', '<leader>pc', function()
     builtin.lsp_dynamic_workspace_symbols(class_opts)
 end, {})
 
+
+-- Extensions
+vim.keymap.set('n', '<leader>pr', extensions.recent_files.pick, {})
+vim.keymap.set('n', '<leader><CR>', builtin.find_files, {})

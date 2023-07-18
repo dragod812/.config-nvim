@@ -7,10 +7,12 @@ return require('packer').startup(function(use)
     -- Packer can manage itself
     use 'wbthomason/packer.nvim'
     use {
-        'nvim-telescope/telescope.nvim', tag = '0.1.1',
+        'nvim-telescope/telescope.nvim', tag = '0.1.2',
         -- or                            , branch = '0.1.x',
         requires = { { 'nvim-lua/plenary.nvim' } }
     }
+    use {"smartpde/telescope-recent-files"}
+
 
     -- use {
     --     'lalitmee/cobalt2.nvim',
@@ -338,6 +340,58 @@ return require('packer').startup(function(use)
         config = function()
             -- install debugpy from mason
             require('dap-python').setup('~/.local/share/nvim/mason/packages/debugpy/venv/bin/python')
+        end
+    }
+
+    use {
+        "folke/zen-mode.nvim",
+        config = function()
+            require('zen-mode').setup({
+                window = {
+                    backdrop = 0.90, -- shade the backdrop of the Zen window. Set to 1 to keep the same as Normal
+                    -- height and width can be:
+                    -- * an absolute number of cells when > 1
+                    -- * a percentage of the width / height of the editor when <= 1
+                    width = 190, -- width of the Zen window
+                    height = 1,  -- height of the Zen window
+                    -- by default, no options are changed for the Zen window
+                    -- uncomment any of the options below, or add other vim.wo options you want to apply
+                    options = {
+                        -- signcolumn = "no", -- disable signcolumn
+                        -- number = false, -- disable number column
+                        -- relativenumber = false, -- disable relative numbers
+                        -- cursorline = false, -- disable cursorline
+                        -- cursorcolumn = false, -- disable cursor column
+                        -- foldcolumn = "0", -- disable fold column
+                        -- list = false, -- disable whitespace characters
+                    },
+                },
+            })
+        end
+    }
+    use {
+        'wthollingsworth/pomodoro.nvim',
+        requires = 'MunifTanjim/nui.nvim',
+        config = function()
+            require('pomodoro').setup({
+                time_work = 28,
+                time_break_short = 2,
+                time_break_long = 20,
+                timers_to_long_break = 4
+            })
+        end
+    }
+    use {
+        "folke/which-key.nvim",
+        config = function()
+            vim.o.timeout = true
+            vim.o.timeoutlen = 300
+            require("which-key").setup {
+                ignore_missing = true,
+                -- your configuration comes here
+                -- or leave it empty to use the default settings
+                -- refer to the configuration section below
+            }
         end
     }
 end)

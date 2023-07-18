@@ -78,10 +78,10 @@ vim.keymap.set("n", "<leader>`", function()
     vim.cmd.file('term://zsh')
 end)
 
--- open new tab
+-- New file
 vim.keymap.set("n", "<leader>n", ":tabnew<CR>")
-
--- open new split
+vim.keymap.set("n", "<leader>nx", ":new<CR>")
+vim.keymap.set("n", "<leader>nv", ":vnew<CR>")
 vim.keymap.set("n", "<leader>s", ":vsplit<CR><C-w>l")
 
 -- write file
@@ -91,7 +91,14 @@ vim.keymap.set({ "n", "v", "i" }, "<C-s>", ":w<CR>")
 vim.keymap.set({ "n"}, "<leader>de", ":!%<CR>")
 
 -- format json
-vim.keymap.set({ "n" }, "<leader>vjq", ":%! jq .<CR>")
-vim.keymap.set({ "v" }, "<leader>vjq", ":'<,'>%! jq .<CR>")
-
+vim.keymap.set({ "n" }, "<leader>vjf", ":%! jq .<CR>")
+vim.keymap.set({ "v" }, "<leader>vjf", ":'<,'>%! jq .<CR>")
 vim.keymap.set({ "v" }, "<leader>vjc", ":'<,'>%!jq 'del(.alert.typeMeta, .alert.metadata.creationTimestamp, .alert.metadata.annotations, .alert.metadata.clusterName, .alert.metadata.managedFields, .alert.metadata.finalizers, .alert.status.conditions, .alert.metadata.labels.\"michelangelo/UpdateTimestamp\", .alert.metadata.labels.\"michelangelo/SpecUpdateTimestamp\")'")
+vim.keymap.set('n', '<leader>vju', ":%! jq -c '' | uniq -c", {noremap = true, silent = true})
+
+-- zenmode
+vim.keymap.set("n", "<leader>z", ":ZenMode<CR>")
+
+-- query replace command for mes
+vim.keymap.set('n', '<leader>vsc', [[:%s/sql_parameters.//ge<CR> :%s/{{project_meta_table}}/michelangelo.mes_project_meta/ge<CR> :%s/{{project_meta_v2_table}}/michelangelo.mes_project_meta_v2/ge<CR> :%s/{{model_meta_table}}/michelangelo.mes_model_meta/ge<CR> :%s/{{model_meta_v2_table}}/michelangelo.mes_model_meta_v2/ge<CR> :%s/{{metrics_table}}/michelangelo.mes_metrics/ge<CR> :%s/{{alert_configuration_table}}/michelangelo.mes_alert_configuration_meta/ge<CR> :%s/{{model_quality_score_table}}/michelangelo.mes_model_quality_score/ge<CR> :%s/{{datestr}}/\=strftime('%Y-%m-%d', localtime()- 2*24*60*60)/ge<CR>]])
+

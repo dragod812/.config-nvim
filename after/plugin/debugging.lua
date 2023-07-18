@@ -1,8 +1,8 @@
 -- Add breakpoint at line
 vim.keymap.set("n", "<leader>tb", "<cmd> DapToggleBreakpoint <CR>")
 vim.keymap.set("n", "<leader>tc", "<cmd> DapContinue <CR>")
-vim.keymap.set("n", "<leader>tso", "<cmd> DapStepOver <CR>")
-vim.keymap.set("n", "<leader>tsO", "<cmd> DapStepOut <CR>")
+vim.keymap.set("n", "<leader>tsn", "<cmd> DapStepOver <CR>")
+vim.keymap.set("n", "<leader>tso", "<cmd> DapStepOut <CR>")
 vim.keymap.set("n", "<leader>tsi", "<cmd> DapStepInto <CR>")
 vim.keymap.set("n", "<leader>tx", "<cmd> DapTerminate <CR>")
 
