@@ -42,3 +42,7 @@ That's it! You have installed Neovim from source on your Ubuntu system. You can 
 git clone --depth 1 https://github.com/wbthomason/packer.nvim\
  ~/.local/share/nvim/site/pack/packer/start/packer.nvim
 ```
+
+### Setup python for office 
+1. Set `python = "/opt/miniconda/envs/py369/bin/python"` in packer.lua
+2. Set `vim.g.python3_host_prog = '/opt/miniconda/envs/py369/bin/python'` in set.lua

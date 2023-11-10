@@ -45,6 +45,7 @@ wk.register({
             name = "Project",
             f = "Files",
             j = "Jumplist",
+            l = "Last Telescope Search",
             s = "Search",
         },
         r = "Run",

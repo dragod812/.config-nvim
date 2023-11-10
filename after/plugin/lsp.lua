@@ -3,7 +3,7 @@ local lsp = require("lsp-zero").preset("recommended")
 
 lsp.ensure_installed({
     'gopls',
-    'pylsp',
+    'pylsp@1.3.3',
     'lua_ls',
     'yamlls',
     'bashls',

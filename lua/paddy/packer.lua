@@ -95,7 +95,6 @@ return require('packer').startup(function(use)
                     width = "22%",
                     relativenumber = true,
                 },
-                remove_keymaps = { "s" }
             }
         end
     }
@@ -191,7 +190,7 @@ return require('packer').startup(function(use)
             require("chatgpt").setup(
                 {
                     openai_params = {
-                        model = "gpt-3.5-turbo-0301",
+                        model = "gpt-4-1106-preview",
                     }
                 }
             )
