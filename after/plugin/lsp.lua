@@ -3,7 +3,7 @@ local lsp = require("lsp-zero").preset("recommended")
 
 lsp.ensure_installed({
     'gopls',
-    'pylsp@1.3.3',
+    'pyright',
     'lua_ls',
     'yamlls',
     'bashls',
@@ -59,6 +59,7 @@ lsp.on_attach(function(client, bufnr)
     vim.keymap.set("n", "go", function() vim.lsp.buf.document_symbol() end, opts)
     vim.keymap.set("n", "gl", "<C-w>l", opts)
     vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
+    vim.keymap.set("n", "<leader>f", function() vim.lsp.buf.format() end, opts)
     vim.keymap.set("n", "<leader>i", function() vim.diagnostic.goto_next() end, opts)
     vim.keymap.set("n", "<leader>I", function() vim.diagnostic.goto_prev() end, opts)
     vim.keymap.set("n", "<leader>vi", function() vim.diagnostic.open_float() end, opts)
@@ -66,7 +67,7 @@ lsp.on_attach(function(client, bufnr)
     vim.keymap.set("n", "]d", function() vim.diagnostic.goto_next() end, opts)
     vim.keymap.set("n", "[d", function() vim.diagnostic.goto_prev() end, opts)
     vim.keymap.set("n", "<leader>va", function() vim.lsp.buf.code_action() end, opts)
-    vim.keymap.set({"i"}, "<C-a>", function() vim.lsp.buf.code_action() end, { noremap = true, silent = true })
+    vim.keymap.set({ "i" }, "<C-a>", function() vim.lsp.buf.code_action() end, { noremap = true, silent = true })
     vim.keymap.set("n", "<leader>vr", function() vim.lsp.buf.rename() end, opts)
     vim.keymap.set("n", "<leader>vl", function() vim.cmd.LspRestart() end, opts)
     vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
@@ -90,27 +91,42 @@ require('lspconfig').gopls.setup({
     },
 })
 
-require 'lspconfig'.pylsp.setup {
+-- require 'lspconfig'.pylsp.setup {
+--     settings = {
+--         pylsp = {
+--             plugins = {
+--                 pyflakes = { enabled = false },
+--                 pycodestyle = {
+--                     ignore = { 'W391' },
+--                 },
+--                 pylint = {
+--                     enabled = true,
+--                     ignore = { 'E0401' }
+--                 },
+--                 flake8 = {
+--                     enabled = true,
+--                     ignore = { 'E501', 'E999', 'R0903', 'E0401' }
+--                 },
+--                 black = { enabled = true }
+--             }
+--         }
+--     }
+-- }
+
+require 'lspconfig'.pyright.setup{
     settings = {
-        pylsp = {
-            plugins = {
-                pyflakes = { enabled = false },
-                pycodestyle = {
-                    ignore = { 'W391' },
-                },
-                pylint = {
-                    enabled = true,
-                    ignore = { 'E0401' }
-                },
-                flake8 = {
-                    enabled = true,
-                    ignore = { 'E501', 'E999', 'R0903' , 'E0401' }
-                },
-                black = { enabled = true }
-            }
+        python = {
+            analysis = {
+                autoSearchPaths = false,
+                diagnosticMode = "workspace", -- "workspace" | "openFilesOnly" | "workspacePlus"
+                useLibraryCodeForTypes = true
+            },
+            pythonPath = "/home/user/uber-one/bin/python3-bazel"
         }
-    }
+    },
+    filetypes = { "python" }
 }
+
 
 lsp.setup()
 

@@ -31,4 +31,3 @@ vim.env.PATH = vim.env.VIM_PATH or vim.env.PATH
 
 -- python stuff
 vim.g.pymode_lint_ignore = "E501,W"
-
