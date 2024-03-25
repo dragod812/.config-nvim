@@ -60,6 +60,15 @@ require("formatter").setup({
 				}
 			end,
 		},
+		dart = {
+			function()
+				return {
+					exe = "dart",
+					args = { "format" },
+					stdin = true,
+				}
+			end,
+		},
 		-- Use the special "*" filetype for defining formatter configurations on
 		-- any filetype
 		["*"] = {
