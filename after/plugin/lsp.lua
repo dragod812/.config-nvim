@@ -1,18 +1,49 @@
-local lsp = require("lsp-zero").preset("recommended")
-
-lsp.ensure_installed({
-	"gopls",
-	"pyright",
-	"lua_ls",
-	"yamlls",
-	"bashls",
-	"jdtls",
-	"clangd",
-	"sqlls",
+-- Mason: auto-install LSP servers
+require("mason").setup()
+require("mason-lspconfig").setup({
+	ensure_installed = {
+		"gopls",
+		"pyright",
+		"lua_ls",
+		"yamlls",
+		"bashls",
+		"jdtls",
+		"clangd",
+		"sqlls",
+	},
+	automatic_enable = {
+		exclude = { "stylua" },
+	},
 })
 
--- Fix Undefined global 'vim'
-lsp.configure("lua_ls", {
+-- nvim-cmp completion setup
+local cmp = require("cmp")
+local cmp_select = { behavior = cmp.SelectBehavior.Select }
+
+cmp.setup({
+	sources = {
+		{ name = "nvim_lsp" },
+		{ name = "luasnip" },
+	},
+	mapping = cmp.mapping.preset.insert({
+		["<C-p>"] = cmp.mapping.select_prev_item(cmp_select),
+		["<C-n>"] = cmp.mapping.select_next_item(cmp_select),
+		["<C-y>"] = cmp.mapping.confirm({ select = true }),
+		["<C-Space>"] = cmp.mapping.complete(),
+	}),
+	snippet = {
+		expand = function(args)
+			require("luasnip").lsp_expand(args.body)
+		end,
+	},
+})
+
+-- Share cmp capabilities with all LSP servers
+local capabilities = require("cmp_nvim_lsp").default_capabilities()
+vim.lsp.config("*", { capabilities = capabilities })
+
+-- Server-specific configs
+vim.lsp.config("lua_ls", {
 	settings = {
 		Lua = {
 			diagnostics = {
@@ -22,90 +53,7 @@ lsp.configure("lua_ls", {
 	},
 })
 
-local cmp = require("cmp")
-local cmp_select = { behavior = cmp.SelectBehavior.Select }
-local cmp_mappings = lsp.defaults.cmp_mappings({
-	["<C-p>"] = cmp.mapping.select_prev_item(cmp_select),
-	["<C-n>"] = cmp.mapping.select_next_item(cmp_select),
-	["<C-y>"] = cmp.mapping.confirm({ select = true }),
-	["<C-Space>"] = cmp.mapping.complete(),
-})
-
-cmp_mappings["<Tab>"] = nil
-cmp_mappings["<S-Tab>"] = nil
-
-lsp.setup_nvim_cmp({
-	mapping = cmp_mappings,
-})
-
-lsp.set_preferences({
-	suggest_lsp_servers = false,
-	sign_icons = {
-		error = "E",
-		warn = "W",
-		hint = "H",
-		info = "I",
-	},
-})
-
-lsp.on_attach(function(client, bufnr)
-	local opts = { buffer = bufnr, remap = false }
-
-	vim.keymap.set("n", "gd", function()
-		vim.lsp.buf.definition()
-	end, opts)
-	vim.keymap.set("n", "gD", function()
-		vim.lsp.buf.type_definition()
-	end, opts)
-	vim.keymap.set("n", "gr", function()
-		vim.lsp.buf.references()
-	end, opts)
-	vim.keymap.set("n", "go", function()
-		vim.lsp.buf.document_symbol()
-	end, opts)
-	vim.keymap.set("n", "gl", "<C-w>l", opts)
-	vim.keymap.set("n", "K", function()
-		vim.lsp.buf.hover()
-	end, opts)
-	vim.keymap.set("n", "<leader>f", function()
-		vim.lsp.buf.format()
-	end, opts)
-	vim.keymap.set("n", "<leader>i", function()
-		vim.diagnostic.goto_next()
-	end, opts)
-	vim.keymap.set("n", "<leader>I", function()
-		vim.diagnostic.goto_prev()
-	end, opts)
-	vim.keymap.set("n", "<leader>vi", function()
-		vim.diagnostic.open_float()
-	end, opts)
-	vim.keymap.set("n", "<leader>vd", function()
-		vim.diagnostic.setloclist()
-	end, opts)
-	vim.keymap.set("n", "]d", function()
-		vim.diagnostic.goto_next()
-	end, opts)
-	vim.keymap.set("n", "[d", function()
-		vim.diagnostic.goto_prev()
-	end, opts)
-	vim.keymap.set("n", "<leader>va", function()
-		vim.lsp.buf.code_action()
-	end, opts)
-	vim.keymap.set({ "i" }, "<C-a>", function()
-		vim.lsp.buf.code_action()
-	end, { noremap = true, silent = true })
-	vim.keymap.set("n", "<leader>vr", function()
-		vim.lsp.buf.rename()
-	end, opts)
-	vim.keymap.set("n", "<leader>vl", function()
-		vim.cmd.LspRestart()
-	end, opts)
-	vim.keymap.set("i", "<C-h>", function()
-		vim.lsp.buf.signature_help()
-	end, opts)
-end)
-
-require("lspconfig").gopls.setup({
+vim.lsp.config("gopls", {
 	cmd = { "gopls", "-remote=auto" },
 	flags = {
 		debounce_text_changes = 1000,
@@ -122,30 +70,63 @@ require("lspconfig").gopls.setup({
 	},
 })
 
-require("lspconfig").pyright.setup({
+vim.lsp.config("pyright", {
 	settings = {
 		python = {
 			analysis = {
 				autoSearchPaths = false,
-				diagnosticMode = "workspace", -- "workspace" | "openFilesOnly" | "workspacePlus"
+				diagnosticMode = "workspace",
 				useLibraryCodeForTypes = true,
 			},
-			-- pythonPath = "/Users/sidharthpadhee/Code/python/grouping-job-prototype/.venv/bin/python",
 		},
 	},
 	filetypes = { "python" },
 })
 
-lsp.setup()
+-- Enable all servers
+vim.lsp.enable({ "gopls", "pyright", "lua_ls", "yamlls", "bashls", "jdtls", "clangd", "sqlls" })
 
+-- Diagnostic config
 vim.diagnostic.config({
 	virtual_text = true,
+	signs = {
+		text = {
+			[vim.diagnostic.severity.ERROR] = "E",
+			[vim.diagnostic.severity.WARN] = "W",
+			[vim.diagnostic.severity.HINT] = "H",
+			[vim.diagnostic.severity.INFO] = "I",
+		},
+	},
 })
 
-local dart_lsp = lsp.build_options("dartls", {})
+-- Keymaps on LSP attach
+vim.api.nvim_create_autocmd("LspAttach", {
+	callback = function(event)
+		local opts = { buffer = event.buf, remap = false }
+		vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+		vim.keymap.set("n", "gD", vim.lsp.buf.type_definition, opts)
+		vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+		vim.keymap.set("n", "go", vim.lsp.buf.document_symbol, opts)
+		vim.keymap.set("n", "gl", "<C-w>l", opts)
+		vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+		vim.keymap.set("n", "<leader>f", vim.lsp.buf.format, opts)
+		vim.keymap.set("n", "<leader>i", vim.diagnostic.goto_next, opts)
+		vim.keymap.set("n", "<leader>I", vim.diagnostic.goto_prev, opts)
+		vim.keymap.set("n", "<leader>vi", vim.diagnostic.open_float, opts)
+		vim.keymap.set("n", "<leader>vd", vim.diagnostic.setloclist, opts)
+		vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
+		vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
+		vim.keymap.set("n", "<leader>va", vim.lsp.buf.code_action, opts)
+		vim.keymap.set({ "i" }, "<C-a>", vim.lsp.buf.code_action, { noremap = true, silent = true })
+		vim.keymap.set("n", "<leader>vr", vim.lsp.buf.rename, opts)
+		vim.keymap.set("n", "<leader>vl", vim.cmd.LspRestart, opts)
+		vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, opts)
+	end,
+})
 
+-- Flutter/Dart
 require("flutter-tools").setup({
 	lsp = {
-		capabilities = dart_lsp.capabilities,
+		capabilities = capabilities,
 	},
 })

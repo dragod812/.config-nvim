@@ -62,7 +62,8 @@ vim.keymap.set("n", "gL", "<C-w>L", { noremap = true, silent = true })
 -- copy file path
 vim.keymap.set("n", "<leader>C", ":let @\"=expand('%:p')<CR>")
 -- copy relative file path
-vim.keymap.set("n", "<leader>c", ":let @\"=expand('%', ':p:h:t')<CR>")
+vim.keymap.set("n", "<leader>c", ":let @\"=expand('%')<CR>")
+--
 
 -- open current folder
 vim.keymap.set("n", "gf", ":Oil --float<CR>:set relativenumber<CR>")
@@ -75,7 +76,7 @@ end)
 vim.keymap.set("t", "<C-n>", "<C-\\><C-n>")
 
 -- New file
-vim.keymap.set("n", "<leader>n", ":tabnew<CR>")
+vim.keymap.set("n", "<leader>nt", ":tabnew<CR>")
 vim.keymap.set("n", "<leader>nx", ":new<CR>")
 vim.keymap.set("n", "<leader>nv", ":vnew<CR>")
 vim.keymap.set("n", "<leader>s", ":vsplit<CR><C-w>l")
