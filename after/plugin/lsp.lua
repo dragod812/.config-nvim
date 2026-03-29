@@ -55,9 +55,6 @@ vim.lsp.config("lua_ls", {
 
 vim.lsp.config("gopls", {
 	cmd = { "gopls", "-remote=auto" },
-	flags = {
-		debounce_text_changes = 1000,
-	},
 	settings = {
 		gopls = {
 			directoryFilters = {
@@ -99,25 +96,23 @@ vim.diagnostic.config({
 	},
 })
 
--- Keymaps on LSP attach
+-- LSP keymaps on attach
+-- Nvim 0.11 provides: gd, gD (declaration), K, grr, gra, grn, gri, grt, ]d, [d
+-- We only add keymaps that Nvim 0.11 doesn't provide by default
 vim.api.nvim_create_autocmd("LspAttach", {
 	callback = function(event)
 		local opts = { buffer = event.buf, remap = false }
-		vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-		vim.keymap.set("n", "gD", vim.lsp.buf.type_definition, opts)
-		vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
 		vim.keymap.set("n", "go", vim.lsp.buf.document_symbol, opts)
-		vim.keymap.set("n", "gl", "<C-w>l", opts)
-		vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
 		vim.keymap.set("n", "<leader>f", vim.lsp.buf.format, opts)
-		vim.keymap.set("n", "<leader>i", vim.diagnostic.goto_next, opts)
-		vim.keymap.set("n", "<leader>I", vim.diagnostic.goto_prev, opts)
+		vim.keymap.set("n", "<leader>i", function()
+			vim.diagnostic.jump({ count = 1, float = true })
+		end, opts)
+		vim.keymap.set("n", "<leader>I", function()
+			vim.diagnostic.jump({ count = -1, float = true })
+		end, opts)
 		vim.keymap.set("n", "<leader>vi", vim.diagnostic.open_float, opts)
 		vim.keymap.set("n", "<leader>vd", vim.diagnostic.setloclist, opts)
-		vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
-		vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
 		vim.keymap.set("n", "<leader>va", vim.lsp.buf.code_action, opts)
-		vim.keymap.set({ "i" }, "<C-a>", vim.lsp.buf.code_action, { noremap = true, silent = true })
 		vim.keymap.set("n", "<leader>vr", vim.lsp.buf.rename, opts)
 		vim.keymap.set("n", "<leader>vl", vim.cmd.LspRestart, opts)
 		vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, opts)
@@ -126,6 +121,10 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
 -- Flutter/Dart
 require("flutter-tools").setup({
+	debugger = {
+		enabled = true,
+		run_via_dap = true,
+	},
 	lsp = {
 		capabilities = capabilities,
 	},

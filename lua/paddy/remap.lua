@@ -1,4 +1,3 @@
-vim.g.mapleader = " "
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 
@@ -7,7 +6,8 @@ vim.keymap.set("n", "<C-u>", "<C-u>zz")
 vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
 
--- vim.keymap.set("x", "<leader>p", [["_dP]])
+-- clear search highlight
+vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 
 vim.keymap.set("v", "<leader>y", "<Plug>OSCYankVisual")
 vim.keymap.set("n", "<leader>y", function()
@@ -15,11 +15,8 @@ vim.keymap.set("n", "<leader>y", function()
 end)
 vim.keymap.set("n", "<leader>r", vim.cmd.reg)
 
--- vim.keymap.set("n", "<leader>Y", [["+Y]])
--- vim.keymap.set({"n", "v"}, "<leader>d", [["_d]])
-
-vim.keymap.set("n", "<leader>j", ":cnext<CR>zz")
-vim.keymap.set("n", "<leader>k", ":cprev<CR>zz")
+vim.keymap.set("n", "<leader>j", "<cmd>cnext<CR>zz")
+vim.keymap.set("n", "<leader>k", "<cmd>cprev<CR>zz")
 vim.keymap.set("n", "<leader>J", "<cmd>lnext<CR>zz")
 vim.keymap.set("n", "<leader>K", "<cmd>lprev<CR>zz")
 
@@ -30,10 +27,10 @@ vim.keymap.set("n", "<leader>-", "2<C-w><")
 vim.keymap.set("n", "<leader>=", "2<C-w>>")
 vim.keymap.set("n", "<leader>m", "<C-w>_<C-w>|")
 vim.keymap.set("n", "<leader>M", "<C-w>=")
-vim.keymap.set("n", "<A-Down>", ":resize -2<CR>")
-vim.keymap.set("n", "<A-Up>", ":resize +2<CR>")
-vim.keymap.set("n", "<A-Left>", ":vertical resize -2<CR>")
-vim.keymap.set("n", "<A-Right>", ":vertical resize +2<CR>")
+vim.keymap.set("n", "<A-Down>", "<cmd>resize -2<CR>")
+vim.keymap.set("n", "<A-Up>", "<cmd>resize +2<CR>")
+vim.keymap.set("n", "<A-Left>", "<cmd>vertical resize -2<CR>")
+vim.keymap.set("n", "<A-Right>", "<cmd>vertical resize +2<CR>")
 
 -- move between tabs
 vim.keymap.set("n", "<leader>1", "1gt")
@@ -45,7 +42,7 @@ vim.keymap.set("n", "<leader>6", "6gt")
 vim.keymap.set("n", "<leader>7", "7gt")
 vim.keymap.set("n", "<leader>8", "8gt")
 vim.keymap.set("n", "<leader>9", "9gt")
-vim.keymap.set("n", "<leader>0", ":tablast<cr>")
+vim.keymap.set("n", "<leader>0", "<cmd>tablast<cr>")
 
 -- move between splits
 vim.keymap.set("n", "gh", "<C-w>h", { noremap = true, silent = true })
@@ -60,48 +57,43 @@ vim.keymap.set("n", "gK", "<C-w>K", { noremap = true, silent = true })
 vim.keymap.set("n", "gL", "<C-w>L", { noremap = true, silent = true })
 
 -- copy file path
-vim.keymap.set("n", "<leader>C", ":let @\"=expand('%:p')<CR>")
+vim.keymap.set("n", "<leader>C", "<cmd>let @\"=expand('%:p')<CR>")
 -- copy relative file path
-vim.keymap.set("n", "<leader>c", ":let @\"=expand('%')<CR>")
---
+vim.keymap.set("n", "<leader>c", "<cmd>let @\"=expand('%')<CR>")
 
 -- open current folder
-vim.keymap.set("n", "gf", ":Oil --float<CR>:set relativenumber<CR>")
+vim.keymap.set("n", "gf", "<cmd>Oil --float<CR><cmd>set relativenumber<CR>")
 
 -- open terminal in new tab
--- run <C-\><C-n> to enter normal mode to exit terminal
 vim.keymap.set("n", "<leader>`", function()
 	vim.cmd.terminal()
 end)
 vim.keymap.set("t", "<C-n>", "<C-\\><C-n>")
 
 -- New file
-vim.keymap.set("n", "<leader>nt", ":tabnew<CR>")
-vim.keymap.set("n", "<leader>nx", ":new<CR>")
-vim.keymap.set("n", "<leader>nv", ":vnew<CR>")
-vim.keymap.set("n", "<leader>s", ":vsplit<CR><C-w>l")
+vim.keymap.set("n", "<leader>nt", "<cmd>tabnew<CR>")
+vim.keymap.set("n", "<leader>nx", "<cmd>new<CR>")
+vim.keymap.set("n", "<leader>nv", "<cmd>vnew<CR>")
+vim.keymap.set("n", "<leader>s", "<cmd>vsplit<CR><C-w>l")
 
 -- write file
-vim.keymap.set({ "n", "v", "i" }, "<C-s>", ":w<CR>")
-
--- execute file
-vim.keymap.set({ "n" }, "<leader>de", ":!%<CR>")
+vim.keymap.set({ "n", "v", "i" }, "<C-s>", "<cmd>w<CR>")
 
 -- format json
-vim.keymap.set({ "n" }, "<leader>vjf", ":%! jq .<CR>")
-vim.keymap.set({ "v" }, "<leader>vjf", ":'<,'>%! jq .<CR>")
+vim.keymap.set("n", "<leader>vjf", "<cmd>%! jq .<CR>")
+vim.keymap.set("v", "<leader>vjf", ":'<,'>! jq .<CR>")
 vim.keymap.set(
-	{ "v" },
+	"v",
 	"<leader>vjc",
-	":'<,'>%!jq 'del(.typeMeta, .metadata.creationTimestamp, .metadata.generateName, .metadata.selfLink, .metadata.annotations, .metadata.clusterName, .metadata.managedFields, .metadata.finalizers, .status.conditions, .metadata.labels.\"michelangelo/UpdateTimestamp\", .metadata.labels.\"michelangelo/SpecUpdateTimestamp\")'"
+	":'<,'>!jq 'del(.typeMeta, .metadata.creationTimestamp, .metadata.generateName, .metadata.selfLink, .metadata.annotations, .metadata.clusterName, .metadata.managedFields, .metadata.finalizers, .status.conditions, .metadata.labels.\"michelangelo/UpdateTimestamp\", .metadata.labels.\"michelangelo/SpecUpdateTimestamp\")'"
 )
-vim.keymap.set("n", "<leader>vju", ":%! jq -c '' | uniq -c", { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>vju", "<cmd>%! jq -c '' | uniq -c<CR>")
 
 -- vim vertical diff
-vim.keymap.set({ "n" }, "<leader>v/", ":vert diffsplit ")
+vim.keymap.set("n", "<leader>v/", ":vert diffsplit ")
 
 -- zenmode
-vim.keymap.set("n", "<leader>z", ":ZenMode<CR>")
+vim.keymap.set("n", "<leader>z", "<cmd>ZenMode<CR>")
 
 -- query replace command for mes
 vim.keymap.set(

@@ -1,1 +1,1 @@
-vim.keymap.set('n', "<leader>o", vim.cmd.SymbolsOutline, {noremap = true, silent = true})
+vim.keymap.set("n", "<leader>o", "<cmd>Outline<CR>", { noremap = true, silent = true })

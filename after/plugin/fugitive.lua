@@ -1,46 +1,46 @@
 vim.keymap.set("n", "<leader>gs", vim.cmd.Git)
 vim.keymap.set("n", "<leader>gf", function()
-    vim.cmd('Git log -100 --oneline -- %');
+	vim.cmd("Git log -100 --oneline -- %")
 end, { silent = true, noremap = true })
 vim.keymap.set("n", "<leader>gl", function()
-    vim.cmd('Git log -100 --oneline .');
+	vim.cmd("Git log -100 --oneline .")
 end)
 vim.keymap.set("n", "<leader>gb", function()
-    vim.cmd('Git blame');
+	vim.cmd("Git blame")
 end)
 vim.keymap.set("n", "<leader>gM", function()
-    vim.cmd('Git diff main');
+	vim.cmd("Git diff main")
 end)
 vim.keymap.set("n", "<leader>gp", function()
-    vim.cmd('Git pull --rebase');
+	vim.cmd("Git pull --rebase")
 end)
 vim.keymap.set("n", "<leader>gP", function()
-    vim.cmd('Git push -u origin');
+	vim.cmd("Git push -u origin")
 end)
 vim.keymap.set("n", "<leader>g=", function()
-    vim.cmd('Git add .');
+	vim.cmd("Git add .")
 end)
 vim.keymap.set("n", "<leader>g-", function()
-    vim.cmd('Git reset --mixed HEAD');
+	vim.cmd("Git reset --mixed HEAD")
 end)
-vim.keymap.set("n", "<leader>gr", ':Git rebase ')
-vim.keymap.set("n", "<leader>gc", ':Git checkout ')
--- dont use
+vim.keymap.set("n", "<leader>gr", ":Git rebase ")
+vim.keymap.set("n", "<leader>gc", ":Git checkout ")
 vim.keymap.set("n", "<leader>gd", vim.cmd.Gdiffsplit)
 vim.keymap.set("n", "<leader>gD", function()
-    vim.cmd.diffoff()
-    vim.cmd.edit()
+	vim.cmd.diffoff()
+	vim.cmd.edit()
 end)
 vim.keymap.set("n", "g/", vim.cmd.Gvdiffsplit)
 vim.keymap.set("v", "<leader>g=", ":'<,'>diffput<CR>")
 vim.keymap.set("v", "<leader>g-", ":'<,'>diffget<CR>")
-vim.keymap.set("n", "gn", "]c")
-vim.keymap.set("n", "gp", "]c")
+
+-- diff hunk navigation (don't shadow gn/gp builtins)
+vim.keymap.set("n", "]h", "]c", { desc = "Next diff hunk" })
+vim.keymap.set("n", "[h", "[c", { desc = "Prev diff hunk" })
 
 vim.keymap.set("n", "<leader>h", "<cmd>diffget //2<CR>")
 vim.keymap.set("n", "<leader>l", "<cmd>diffget //3<CR>")
 
-vim.keymap.set("n", "<leader>gz0", ':Git stash apply stash@{0}<CR>')
-vim.keymap.set("n", "<leader>gz1", ':Git stash apply stash@{1}<CR>')
-vim.keymap.set("n", "<leader>gz2", ':Git stash apply stash@{2}<CR>')
-
+vim.keymap.set("n", "<leader>gz0", "<cmd>Git stash apply stash@{0}<CR>")
+vim.keymap.set("n", "<leader>gz1", "<cmd>Git stash apply stash@{1}<CR>")
+vim.keymap.set("n", "<leader>gz2", "<cmd>Git stash apply stash@{2}<CR>")

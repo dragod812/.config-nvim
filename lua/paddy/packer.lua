@@ -1,6 +1,3 @@
--- This file can be loaded by calling `lua require('plugins')` from your init.vim
-
--- Only equired if you have packer configured as `opt`
 vim.cmd([[packadd packer.nvim]])
 
 return require("packer").startup(function(use)
@@ -8,16 +5,11 @@ return require("packer").startup(function(use)
 	use("wbthomason/packer.nvim")
 	use({
 		"nvim-telescope/telescope.nvim",
-		tag = "0.1.2",
-		-- or                            , branch = '0.1.x',
+		branch = "0.1.x",
 		requires = { { "nvim-lua/plenary.nvim" } },
 	})
 	use({ "smartpde/telescope-recent-files" })
 
-	-- use {
-	--     'lalitmee/cobalt2.nvim',
-	--     requires = 'tjdevries/colorbuddy.nvim',
-	-- }
 	use({ "catppuccin/nvim", as = "catppuccin" })
 
 	use("theprimeagen/harpoon")
@@ -29,11 +21,9 @@ return require("packer").startup(function(use)
 		run = ":TSUpdate",
 	})
 	use("nvim-treesitter/nvim-treesitter-context")
-	-- install gounit binary - go install  github.com/hexdigest/gounit/cmd/gounit@latest
 	use("hexdigest/gounit-vim")
 	use("ojroques/vim-oscyank")
 
-	-- flash.nvim
 	use({
 		"folke/flash.nvim",
 		config = function()
@@ -45,49 +35,33 @@ return require("packer").startup(function(use)
 	use("google/vim-maktaba")
 	use("bazelbuild/vim-bazel")
 
+	-- LSP & completion (no lsp-zero, native Nvim 0.11 setup)
+	use("neovim/nvim-lspconfig")
 	use({
-		"VonHeikemen/lsp-zero.nvim",
-		branch = "v2.x",
-		requires = {
-			-- LSP Support
-			{ "neovim/nvim-lspconfig" }, -- Required
-			{
-				-- Optional
-				"williamboman/mason.nvim",
-				run = function()
-					pcall(vim.cmd, "MasonUpdate")
-				end,
-			},
-			{ "williamboman/mason-lspconfig.nvim" }, -- Optional
-			-- Autocompletion
-			{ "hrsh7th/nvim-cmp" }, -- Required
-			{ "hrsh7th/cmp-nvim-lsp" }, -- Required
-			{ "L3MON4D3/LuaSnip" }, -- Required
-			{ "j-hui/fidget.nvim" },
-			{ "mhartington/formatter.nvim" },
-		},
+		"williamboman/mason.nvim",
+		run = function()
+			pcall(vim.cmd, "MasonUpdate")
+		end,
 	})
+	use("williamboman/mason-lspconfig.nvim")
+	use("hrsh7th/nvim-cmp")
+	use("hrsh7th/cmp-nvim-lsp")
+	use("L3MON4D3/LuaSnip")
+	use("j-hui/fidget.nvim")
+	use("mhartington/formatter.nvim")
 
 	use({
 		"akinsho/flutter-tools.nvim",
 		requires = {
 			"nvim-lua/plenary.nvim",
-			"stevearc/dressing.nvim", -- optional for vim.ui.select
+			"stevearc/dressing.nvim",
 		},
-		config = function()
-			require("flutter-tools").setup({
-				debugger = {
-					enabled = true,
-					run_via_dap = true,
-				},
-			})
-		end,
 	})
 
 	use({
 		"nvim-tree/nvim-tree.lua",
 		requires = {
-			"nvim-tree/nvim-web-devicons", -- optional
+			"nvim-tree/nvim-web-devicons",
 		},
 		config = function()
 			require("nvim-tree").setup({
@@ -119,7 +93,6 @@ return require("packer").startup(function(use)
 		config = function()
 			require("other-nvim").setup({
 				mappings = {
-					-- golang, python & dart custom mapping
 					{
 						pattern = "(.*).go$",
 						target = "%1_test.go",
@@ -162,15 +135,9 @@ return require("packer").startup(function(use)
 					},
 				},
 				style = {
-					-- How the plugin paints its window borders
-					-- Allowed values are none, single, double, rounded, solid and shadow
 					border = "solid",
-					-- Column seperator for the window
 					seperator = "|",
-					-- width of the window in percent. e.g. 0.5 is 50%, 1.0 is 100%
 					width = 0.7,
-					-- min height in rows.
-					-- when more columns are needed this value is extended automatically
 					minHeight = 2,
 				},
 			})
@@ -196,11 +163,9 @@ return require("packer").startup(function(use)
 	})
 	use({
 		"kylechui/nvim-surround",
-		tag = "*", -- Use for stability; omit to use `main` branch for the latest features
+		tag = "*",
 		config = function()
-			require("nvim-surround").setup({
-				-- Configuration here, or leave empty to use defaults
-			})
+			require("nvim-surround").setup({})
 		end,
 	})
 	use({
@@ -213,18 +178,20 @@ return require("packer").startup(function(use)
 		end,
 	})
 	use({
-		"simrat39/symbols-outline.nvim",
+		"hedyhli/outline.nvim",
 		config = function()
-			require("symbols-outline").setup({
-				highlight_hovered_item = true,
-				show_guides = true,
-				show_numbers = true,
-				show_relative_numbers = true,
+			require("outline").setup({
+				outline_items = {
+					show_symbol_lineno = true,
+				},
+				guides = {
+					enabled = true,
+				},
 			})
 		end,
 	})
 
-	-- plantuml preview requirements
+	-- plantuml preview
 	use({
 		"weirongxu/plantuml-previewer.vim",
 		run = "yarn install --frozen-lockfile",
@@ -257,10 +224,8 @@ return require("packer").startup(function(use)
 			"nvim-treesitter/nvim-treesitter",
 			"antoinemadec/FixCursorHold.nvim",
 			"nvim-neotest/nvim-nio",
-			-- Your other test adapters here
 		},
 		config = function()
-			-- get neotest namespace (api call creates or returns namespace)
 			local neotest_ns = vim.api.nvim_create_namespace("neotest")
 			vim.diagnostic.config({
 				virtual_text = {
@@ -272,54 +237,29 @@ return require("packer").startup(function(use)
 				},
 			}, neotest_ns)
 			require("neotest").setup({
-				-- your neotest config here
 				adapters = {
 					require("neotest-go"),
 					require("neotest-python")({
-						-- Extra arguments for nvim-dap configuration
-						-- See https://github.com/microsoft/debugpy/wiki/Debug-configuration-settings for values
 						dap = { justMyCode = false },
-						-- Command line arguments for runner
-						-- Can also be a function to return dynamic values
 						args = { "--log-level", "DEBUG" },
-						-- Runner to use. Will use pytest if available by default.
-						-- Can be a function to return dynamic value.
 						runner = "pytest",
-						-- Custom python path for the runner.
-						-- Can be a string or a list of strings.
-						-- Can also be a function to return dynamic value.
-						-- If not provided, the path will be inferred by checking for
-						-- virtual envs in the local directory and for Pipenev/Poetry configs
 						python = ".venv/bin/python",
-						-- Returns if a given file path is a test file.
-						-- NB: This function is called a lot so don't perform any heavy tasks within it.
 					}),
 					require("neotest-dart")({
-						command = "flutter", -- Command being used to run tests. Defaults to `flutter`
-						-- Change it to `fvm flutter` if using FVM
-						-- change it to `dart` for Dart only tests
-						use_lsp = true, -- When set Flutter outline information is used when constructing test name.
+						command = "flutter",
+						use_lsp = true,
 					}),
 				},
 			})
 		end,
 	})
-	use({
-		"mfussenegger/nvim-dap",
-	})
+	use("mfussenegger/nvim-dap")
 	use({
 		"leoluz/nvim-dap-go",
 		ft = { "go" },
-		requires = {
-			"mfussenegger/nvim-dap",
-		},
+		requires = { "mfussenegger/nvim-dap" },
 		config = function()
-			require("dap-go").setup({
-				ensure_installed = {
-					"gopls",
-				},
-			})
-			-- require("core.utils").load_mappings("dap_go")
+			require("dap-go").setup({})
 		end,
 	})
 	use({
@@ -348,7 +288,6 @@ return require("packer").startup(function(use)
 			"rcarriga/nvim-dap-ui",
 		},
 		config = function()
-			-- install debugpy from mason
 			require("dap-python").setup("~/.local/share/nvim/mason/packages/debugpy/venv/bin/python")
 		end,
 	})
@@ -358,23 +297,9 @@ return require("packer").startup(function(use)
 		config = function()
 			require("zen-mode").setup({
 				window = {
-					backdrop = 0.90, -- shade the backdrop of the Zen window. Set to 1 to keep the same as Normal
-					-- height and width can be:
-					-- * an absolute number of cells when > 1
-					-- * a percentage of the width / height of the editor when <= 1
-					width = 190, -- width of the Zen window
-					height = 1, -- height of the Zen window
-					-- by default, no options are changed for the Zen window
-					-- uncomment any of the options below, or add other vim.wo options you want to apply
-					options = {
-						-- signcolumn = "no", -- disable signcolumn
-						-- number = false, -- disable number column
-						-- relativenumber = false, -- disable relative numbers
-						-- cursorline = false, -- disable cursorline
-						-- cursorcolumn = false, -- disable cursor column
-						-- foldcolumn = "0", -- disable fold column
-						-- list = false, -- disable whitespace characters
-					},
+					backdrop = 0.90,
+					width = 190,
+					height = 1,
 				},
 			})
 		end,
