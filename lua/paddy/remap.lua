@@ -20,7 +20,7 @@ vim.keymap.set("n", "<leader>k", "<cmd>cprev<CR>zz")
 vim.keymap.set("n", "<leader>J", "<cmd>lnext<CR>zz")
 vim.keymap.set("n", "<leader>K", "<cmd>lprev<CR>zz")
 
-vim.keymap.set("n", "g,", "<cmd>e ~/.config/nvim/lua/paddy/remap.lua<CR>")
+vim.keymap.set("n", "g,", "<cmd>e ~/.config/nvim/lua/paddy/lazy.lua<CR>")
 
 -- resize buffers
 vim.keymap.set("n", "<leader>-", "2<C-w><")

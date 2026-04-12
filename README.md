@@ -46,3 +46,10 @@ git clone --depth 1 https://github.com/wbthomason/packer.nvim\
 ### Setup python for office 
 1. Set `python = "/opt/miniconda/envs/py369/bin/python"` in packer.lua
 2. Set `vim.g.python3_host_prog = '/opt/miniconda/envs/py369/bin/python'` in set.lua
+
+### Treesitter
+`nvim-treesitter` is pinned to `main`, which needs the `tree-sitter` CLI on `PATH`:
+```
+npm install -g tree-sitter-cli
+```
+Then run `:TSUpdate` in nvim and restart.

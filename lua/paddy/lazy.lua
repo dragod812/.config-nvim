@@ -84,24 +84,40 @@ require("lazy").setup({
 		end,
 	},
 
-	-- Treesitter (pin to main branch for Nvim 0.11 compatibility)
+	-- Treesitter (main branch — new API for Nvim 0.12)
 	{
 		"nvim-treesitter/nvim-treesitter",
-		branch = "master",
+		branch = "main",
 		build = ":TSUpdate",
+		lazy = false,
 		config = function()
-			require("nvim-treesitter.configs").setup({
-				ensure_installed = {
-					"javascript", "typescript", "c", "lua", "go",
-					"java", "python", "dart", "json", "bash",
-				},
-				sync_install = false,
-				auto_install = true,
-				highlight = {
-					enable = true,
-					additional_vim_regex_highlighting = false,
-				},
+			local ensure_installed = {
+				"javascript",
+				"typescript",
+				"c",
+				"lua",
+				"go",
+				"java",
+				"python",
+				"dart",
+				"json",
+				"bash",
+			}
+			require("nvim-treesitter").install(ensure_installed)
+
+			local filetypes = {}
+			for _, lang in ipairs(ensure_installed) do
+				local ft = vim.treesitter.language.get_filetypes(lang)
+				vim.list_extend(filetypes, ft)
+			end
+
+			vim.api.nvim_create_autocmd("FileType", {
+				pattern = filetypes,
+				callback = function(args)
+					pcall(vim.treesitter.start, args.buf)
+				end,
 			})
+
 			vim.opt.foldmethod = "expr"
 			vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 			vim.opt.foldlevel = 20
@@ -117,10 +133,18 @@ require("lazy").setup({
 			local ui = require("harpoon.ui")
 			vim.keymap.set("n", "<leader>a", mark.add_file)
 			vim.keymap.set("n", "<leader>e", ui.toggle_quick_menu)
-			vim.keymap.set("n", "<C-j>", function() ui.nav_file(1) end, { noremap = true, silent = true })
-			vim.keymap.set("n", "<C-k>", function() ui.nav_file(2) end, { noremap = true, silent = true })
-			vim.keymap.set("n", "<C-l>", function() ui.nav_file(3) end, { noremap = true, silent = true })
-			vim.keymap.set("n", "<C-n>", function() ui.nav_file(4) end, { noremap = true, silent = true })
+			vim.keymap.set("n", "<C-j>", function()
+				ui.nav_file(1)
+			end, { noremap = true, silent = true })
+			vim.keymap.set("n", "<C-k>", function()
+				ui.nav_file(2)
+			end, { noremap = true, silent = true })
+			vim.keymap.set("n", "<C-l>", function()
+				ui.nav_file(3)
+			end, { noremap = true, silent = true })
+			vim.keymap.set("n", "<C-n>", function()
+				ui.nav_file(4)
+			end, { noremap = true, silent = true })
 		end,
 	},
 
@@ -197,10 +221,38 @@ require("lazy").setup({
 		event = "VeryLazy",
 		opts = {},
 		keys = {
-			{ "s", function() require("flash").jump({ remote_op = { restore = true, motion = nil } }) end, mode = { "n", "x", "o" }, desc = "Flash" },
-			{ "S", function() require("flash").treesitter() end, mode = { "n", "o", "x" }, desc = "Flash Treesitter" },
-			{ "r", function() require("flash").remote() end, mode = "o", desc = "Remote Flash" },
-			{ "R", function() require("flash").treesitter_search() end, mode = { "o", "x" }, desc = "Treesitter Search" },
+			{
+				"s",
+				function()
+					require("flash").jump({ remote_op = { restore = true, motion = nil } })
+				end,
+				mode = { "n", "x", "o" },
+				desc = "Flash",
+			},
+			{
+				"S",
+				function()
+					require("flash").treesitter()
+				end,
+				mode = { "n", "o", "x" },
+				desc = "Flash Treesitter",
+			},
+			{
+				"r",
+				function()
+					require("flash").remote()
+				end,
+				mode = "o",
+				desc = "Remote Flash",
+			},
+			{
+				"R",
+				function()
+					require("flash").treesitter_search()
+				end,
+				mode = { "o", "x" },
+				desc = "Treesitter Search",
+			},
 		},
 	},
 
@@ -222,8 +274,14 @@ require("lazy").setup({
 			require("mason").setup()
 			require("mason-lspconfig").setup({
 				ensure_installed = {
-					"gopls", "pyright", "lua_ls", "yamlls",
-					"bashls", "jdtls", "clangd", "sqlls",
+					"gopls",
+					"pyright",
+					"lua_ls",
+					"yamlls",
+					"bashls",
+					"jdtls",
+					"clangd",
+					"sqlls",
 				},
 				automatic_enable = {
 					exclude = { "stylua" },
@@ -269,8 +327,10 @@ require("lazy").setup({
 				settings = {
 					gopls = {
 						directoryFilters = {
-							"-bazel-bin", "-babzel-out",
-							"-bazel-testlogs", "-bazel-mypkg",
+							"-bazel-bin",
+							"-babzel-out",
+							"-bazel-testlogs",
+							"-bazel-mypkg",
 						},
 					},
 				},
@@ -290,8 +350,14 @@ require("lazy").setup({
 			})
 
 			vim.lsp.enable({
-				"gopls", "pyright", "lua_ls", "yamlls",
-				"bashls", "jdtls", "clangd", "sqlls",
+				"gopls",
+				"pyright",
+				"lua_ls",
+				"yamlls",
+				"bashls",
+				"jdtls",
+				"clangd",
+				"sqlls",
 			})
 
 			-- Diagnostics
@@ -400,12 +466,15 @@ require("lazy").setup({
 				},
 			})
 
-			vim.api.nvim_exec([[
+			vim.api.nvim_exec(
+				[[
 				augroup FormatAutogroup
 					autocmd!
 					autocmd BufWritePost *.py,*.js,*.ts,*.html,*.css,*.go,*.lua,*.dart FormatWrite
 				augroup END
-			]], true)
+			]],
+				true
+			)
 
 			vim.api.nvim_create_autocmd("BufWritePost", {
 				pattern = "*.go",
@@ -637,8 +706,20 @@ require("lazy").setup({
 		dependencies = { "mfussenegger/nvim-dap" },
 		opts = {},
 		keys = {
-			{ "<leader>tdg", function() require("dap-go").debug_test() end, desc = "Debug Go Test" },
-			{ "<leader>tdl", function() require("dap-go").debug_last() end, desc = "Debug Last Go Test" },
+			{
+				"<leader>tdg",
+				function()
+					require("dap-go").debug_test()
+				end,
+				desc = "Debug Go Test",
+			},
+			{
+				"<leader>tdl",
+				function()
+					require("dap-go").debug_last()
+				end,
+				desc = "Debug Last Go Test",
+			},
 		},
 	},
 	{
@@ -649,7 +730,13 @@ require("lazy").setup({
 			require("dap-python").setup("~/.local/share/nvim/mason/packages/debugpy/venv/bin/python")
 		end,
 		keys = {
-			{ "<leader>tdp", function() require("dap-python").test_method() end, desc = "Debug Python Test" },
+			{
+				"<leader>tdp",
+				function()
+					require("dap-python").test_method()
+				end,
+				desc = "Debug Python Test",
+			},
 		},
 	},
 
@@ -787,4 +874,14 @@ require("lazy").setup({
 
 	-- OSCYank (clipboard over SSH)
 	{ "ojroques/vim-oscyank" },
+	-- install with yarn or npm
+	{
+		"iamcco/markdown-preview.nvim",
+		cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+		build = "cd app && yarn install",
+		init = function()
+			vim.g.mkdp_filetypes = { "markdown" }
+		end,
+		ft = { "markdown" },
+	},
 })
