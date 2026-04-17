@@ -34,6 +34,34 @@ require("lazy").setup({
 			"smartpde/telescope-recent-files",
 		},
 		config = function()
+			-- Shims for nvim-treesitter `main` branch: telescope's previewer
+			-- still calls the legacy nvim-treesitter.parsers / .configs API.
+			local ok, parsers = pcall(require, "nvim-treesitter.parsers")
+			if ok then
+				if not parsers.ft_to_lang then
+					parsers.ft_to_lang = function(ft)
+						return vim.treesitter.language.get_lang(ft) or ft
+					end
+				end
+				if not parsers.get_parser then
+					parsers.get_parser = function(bufnr, lang)
+						return vim.treesitter.get_parser(bufnr, lang)
+					end
+				end
+			end
+			-- `nvim-treesitter.configs` was removed on the main branch; preload a
+			-- stub so telescope's `pcall(require, ...)` picks up a usable table.
+			if not package.loaded["nvim-treesitter.configs"] then
+				package.loaded["nvim-treesitter.configs"] = {
+					is_enabled = function(_, lang)
+						return lang ~= nil and pcall(vim.treesitter.language.add, lang)
+					end,
+					get_module = function()
+						return { additional_vim_regex_highlighting = false }
+					end,
+				}
+			end
+
 			require("telescope").load_extension("recent_files")
 			local builtin = require("telescope.builtin")
 			local extensions = require("telescope").extensions
@@ -131,8 +159,8 @@ require("lazy").setup({
 		config = function()
 			local mark = require("harpoon.mark")
 			local ui = require("harpoon.ui")
-			vim.keymap.set("n", "<leader>a", mark.add_file)
-			vim.keymap.set("n", "<leader>e", ui.toggle_quick_menu)
+			vim.keymap.set("n", "<leader>ea", mark.add_file)
+			vim.keymap.set("n", "<leader>ee", ui.toggle_quick_menu)
 			vim.keymap.set("n", "<C-j>", function()
 				ui.nav_file(1)
 			end, { noremap = true, silent = true })
@@ -328,7 +356,7 @@ require("lazy").setup({
 					gopls = {
 						directoryFilters = {
 							"-bazel-bin",
-							"-babzel-out",
+							"-bazel-out",
 							"-bazel-testlogs",
 							"-bazel-mypkg",
 						},
@@ -415,7 +443,19 @@ require("lazy").setup({
 	},
 
 	-- Fidget (LSP progress)
-	{ "j-hui/fidget.nvim", opts = {} },
+	{
+		"j-hui/fidget.nvim",
+		opts = {
+			notification = { window = { avoid = { "NvimTree" } } },
+		},
+	},
+
+	{
+		"folke/snacks.nvim",
+		lazy = false,
+		priority = 1000,
+		opts = {},
+	},
 
 	-- Formatter
 	{
@@ -548,6 +588,39 @@ require("lazy").setup({
 		config = function()
 			require("nvim_comment").setup()
 		end,
+	},
+
+	-- Claude Code (IDE bridge via WebSocket MCP)
+	{
+		"coder/claudecode.nvim",
+		dependencies = { "folke/snacks.nvim" },
+		config = true,
+		keys = {
+			{ "<leader>ai", "<cmd>ClaudeCode<cr>", desc = "Toggle Claude" },
+			{ "<leader>af", "<cmd>ClaudeCodeFocus<cr>", desc = "Focus Claude" },
+			{ "<leader>ar", "<cmd>ClaudeCode --resume<cr>", desc = "Resume Claude" },
+			{ "<leader>aC", "<cmd>ClaudeCode --continue<cr>", desc = "Continue Claude" },
+			{ "<leader>ab", "<cmd>ClaudeCodeAdd %<cr>", desc = "Add current buffer" },
+			{ "<leader>as", "<cmd>ClaudeCodeSend<cr>", mode = "v", desc = "Send selection" },
+			{
+				"<leader>at",
+				"<cmd>ClaudeCodeTreeAdd<cr>",
+				desc = "Add file from tree",
+				ft = { "NvimTree", "neo-tree", "oil" },
+			},
+			{ "<leader>aa", "<cmd>ClaudeCodeDiffAccept<cr>", desc = "Accept diff" },
+			{ "<leader>ad", "<cmd>ClaudeCodeDiffDeny<cr>", desc = "Deny diff" },
+		},
+	},
+
+	-- Codex (OpenAI Codex CLI floating window)
+	{
+		"johnseth97/codex.nvim",
+		lazy = true,
+		keys = {
+			{ "<leader>ao", "<cmd>Codex<cr>", desc = "Toggle Codex" },
+		},
+		opts = {},
 	},
 
 	-- ChatGPT
@@ -762,10 +835,8 @@ require("lazy").setup({
 				end,
 			})
 			wk.add({
-				{ "<leader>a", desc = "Harpoon Add" },
 				{ "<leader>c", desc = "Copy relative path" },
 				{ "<leader>C", desc = "Copy abs path" },
-				{ "<leader>e", desc = "Harpoon Edit" },
 				{ "<leader>f", desc = "Format" },
 				{ "<leader>i", desc = "Next Diagnostic" },
 				{ "<leader>I", desc = "Prev Diagnostic" },
@@ -793,6 +864,9 @@ require("lazy").setup({
 				{ "<leader>ds", desc = "Search" },
 				{ "<leader>dv", desc = "Variables" },
 
+				{ "<leader>ea", desc = "Harpoon Add" },
+				{ "<leader>ee", desc = "Harpoon Edit" },
+
 				{ "<leader>g", group = "Git" },
 				{ "<leader>g=", desc = "Stage All" },
 				{ "<leader>g-", desc = "Unstage All" },
@@ -816,6 +890,17 @@ require("lazy").setup({
 				{ "<leader>nt", desc = "New Tab" },
 				{ "<leader>nx", desc = "New Horizontal" },
 				{ "<leader>nv", desc = "New Vertical" },
+
+				{ "<leader>a", group = "AI / Claude" },
+				{ "<leader>ai", desc = "Toggle Claude" },
+				{ "<leader>af", desc = "Focus Claude" },
+				{ "<leader>ar", desc = "Resume Claude" },
+				{ "<leader>aC", desc = "Continue Claude" },
+				{ "<leader>ab", desc = "Add Buffer" },
+				{ "<leader>as", desc = "Send Selection", mode = "v" },
+				{ "<leader>at", desc = "Add From Tree" },
+				{ "<leader>aa", desc = "Accept Diff" },
+				{ "<leader>ad", desc = "Deny Diff" },
 
 				{ "<leader>p", group = "Project" },
 				{ "<leader>pf", desc = "Files" },
@@ -884,4 +969,6 @@ require("lazy").setup({
 		end,
 		ft = { "markdown" },
 	},
+}, {
+	rocks = { enabled = false },
 })
