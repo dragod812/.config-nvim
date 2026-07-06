@@ -99,10 +99,6 @@ end)
 -- open current folder
 vim.keymap.set("n", "gf", "<cmd>Oil --float<CR><cmd>set relativenumber<CR>")
 
--- open terminal in new tab
-vim.keymap.set("n", "<leader>`", function()
-	vim.cmd.terminal()
-end)
 vim.keymap.set("t", "<C-n>", "<C-\\><C-n>")
 
 -- New file

@@ -1,5 +1,5 @@
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
+if not vim.uv.fs_stat(lazypath) then
 	vim.fn.system({
 		"git",
 		"clone",
@@ -62,6 +62,35 @@ require("lazy").setup({
 				}
 			end
 
+			require("telescope").setup({
+				defaults = {
+					path_display = { "smart" },
+					sorting_strategy = "ascending",
+					layout_config = {
+						horizontal = {
+							prompt_position = "top",
+							preview_width = 0.55,
+						},
+						vertical = {
+							mirror = true,
+						},
+					},
+					mappings = {
+						i = {
+							["<C-j>"] = "move_selection_next",
+							["<C-k>"] = "move_selection_previous",
+						},
+					},
+				},
+				pickers = {
+					find_files = { hidden = true },
+					git_files = { show_untracked = true },
+					buffers = {
+						sort_mru = true,
+						ignore_current_buffer = true,
+					},
+				},
+			})
 			require("telescope").load_extension("recent_files")
 			local builtin = require("telescope.builtin")
 			local extensions = require("telescope").extensions
@@ -129,6 +158,13 @@ require("lazy").setup({
 				"python",
 				"dart",
 				"json",
+				"markdown",
+				"markdown_inline",
+				"sql",
+				"toml",
+				"vim",
+				"vimdoc",
+				"yaml",
 				"bash",
 			}
 			require("nvim-treesitter").install(ensure_installed)
@@ -143,12 +179,11 @@ require("lazy").setup({
 				pattern = filetypes,
 				callback = function(args)
 					pcall(vim.treesitter.start, args.buf)
+					vim.wo.foldmethod = "expr"
+					vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+					vim.wo.foldlevel = 20
 				end,
 			})
-
-			vim.opt.foldmethod = "expr"
-			vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
-			vim.opt.foldlevel = 20
 		end,
 	},
 	{ "nvim-treesitter/nvim-treesitter-context" },
@@ -454,7 +489,47 @@ require("lazy").setup({
 		"folke/snacks.nvim",
 		lazy = false,
 		priority = 1000,
-		opts = {},
+		opts = {
+			bigfile = { enabled = true },
+			quickfile = { enabled = true },
+			input = { enabled = true },
+			notifier = { enabled = true },
+			indent = { enabled = true },
+			words = { enabled = true },
+			statuscolumn = { enabled = true },
+			gitbrowse = { enabled = true },
+		},
+		keys = {
+			{
+				"<leader>gB",
+				function()
+					Snacks.gitbrowse({ what = "file" })
+				end,
+				mode = { "n", "v" },
+				desc = "Browse file on remote",
+			},
+			{
+				"<leader>bd",
+				function()
+					Snacks.bufdelete()
+				end,
+				desc = "Delete buffer",
+			},
+			{
+				"<leader>nh",
+				function()
+					Snacks.notifier.show_history()
+				end,
+				desc = "Notification history",
+			},
+			{
+				"<leader>`",
+				function()
+					Snacks.terminal()
+				end,
+				desc = "Terminal",
+			},
+		},
 	},
 
 	-- Formatter
@@ -506,19 +581,20 @@ require("lazy").setup({
 				},
 			})
 
-			vim.api.nvim_exec(
-				[[
-				augroup FormatAutogroup
-					autocmd!
-					autocmd BufWritePost *.py,*.js,*.ts,*.html,*.css,*.go,*.lua,*.dart FormatWrite
-				augroup END
-			]],
-				true
-			)
+			local format_group = vim.api.nvim_create_augroup("PaddyFormat", { clear = true })
+			vim.api.nvim_create_autocmd("BufWritePost", {
+				group = format_group,
+				pattern = { "*.py", "*.js", "*.ts", "*.html", "*.css", "*.go", "*.lua", "*.dart" },
+				command = "FormatWrite",
+			})
 
 			vim.api.nvim_create_autocmd("BufWritePost", {
+				group = format_group,
 				pattern = "*.go",
 				callback = function()
+					if vim.fn.executable("staticcheck") == 0 then
+						return
+					end
 					vim.fn.jobstart({ "staticcheck", vim.fn.expand("%:p") }, {
 						on_stdout = function(_, data)
 							if data then
@@ -688,6 +764,7 @@ require("lazy").setup({
 
 	-- Testing (vim-test + neotest)
 	{ "vim-test/vim-test" },
+	{ "nvim-neotest/nvim-nio", lazy = true },
 	{
 		"nvim-neotest/neotest",
 		dependencies = {
@@ -854,6 +931,8 @@ require("lazy").setup({
 				{ "<leader>z", desc = "Zen Mode" },
 				{ "<leader>?", desc = "ChatGPT" },
 				{ "<leader>`", desc = "Terminal" },
+				{ "<leader>bd", desc = "Delete buffer" },
+				{ "<leader>nh", desc = "Notification history" },
 				{ "<leader><leader>", desc = "Opened Buffers" },
 				{ "<leader><CR>", desc = "Find File" },
 
@@ -877,6 +956,7 @@ require("lazy").setup({
 				{ "<leader>gf", desc = "File Log" },
 				{ "<leader>gl", desc = "Log" },
 				{ "<leader>gM", desc = "Diff Main" },
+				{ "<leader>gB", desc = "Browse File" },
 				{ "<leader>gp", desc = "Pull" },
 				{ "<leader>gP", desc = "Push" },
 				{ "<leader>gr", desc = "Rebase" },
@@ -963,11 +1043,16 @@ require("lazy").setup({
 	{
 		"iamcco/markdown-preview.nvim",
 		cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
-		build = "cd app && yarn install",
+		build = function()
+			vim.fn["mkdp#util#install"]()
+		end,
 		init = function()
 			vim.g.mkdp_filetypes = { "markdown" }
 		end,
 		ft = { "markdown" },
+		keys = {
+			{ "<leader>vp", "<cmd>MarkdownPreviewToggle<cr>", desc = "Markdown preview toggle" },
+		},
 	},
 }, {
 	rocks = { enabled = false },
