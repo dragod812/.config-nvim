@@ -57,9 +57,44 @@ vim.keymap.set("n", "gK", "<C-w>K", { noremap = true, silent = true })
 vim.keymap.set("n", "gL", "<C-w>L", { noremap = true, silent = true })
 
 -- copy file path
-vim.keymap.set("n", "<leader>C", "<cmd>let @\"=expand('%:p')<CR>")
+local function path_with_visual_range(path)
+	local start_line = math.min(vim.fn.line("."), vim.fn.line("v"))
+	local end_line = math.max(vim.fn.line("."), vim.fn.line("v"))
+
+	if start_line == end_line then
+		return string.format("%s:%d", path, start_line)
+	end
+
+	return string.format("%s:%d-%d", path, start_line, end_line)
+end
+
+local function relative_current_file_path()
+	return vim.fn.fnamemodify(vim.fn.expand("%:p"), ":.")
+end
+
+vim.keymap.set("n", "<leader>C", function()
+	local path = vim.fn.expand("%:p")
+	vim.fn.setreg('"', path)
+	vim.notify(path, vim.log.levels.INFO, { title = "Copied absolute path" })
+end)
+vim.keymap.set("v", "<leader>C", function()
+	local path = vim.fn.expand("%:p")
+	local path_with_range = path_with_visual_range(path)
+	vim.fn.setreg('"', path_with_range)
+	vim.notify(path_with_range, vim.log.levels.INFO, { title = "Copied absolute path with range" })
+end)
 -- copy relative file path
-vim.keymap.set("n", "<leader>c", "<cmd>let @\"=expand('%')<CR>")
+vim.keymap.set("n", "<leader>c", function()
+	local path = relative_current_file_path()
+	vim.fn.setreg('"', path)
+	vim.notify(path, vim.log.levels.INFO, { title = "Copied relative path" })
+end)
+vim.keymap.set("v", "<leader>c", function()
+	local path = relative_current_file_path()
+	local path_with_range = path_with_visual_range(path)
+	vim.fn.setreg('"', path_with_range)
+	vim.notify(path_with_range, vim.log.levels.INFO, { title = "Copied relative path with range" })
+end)
 
 -- open current folder
 vim.keymap.set("n", "gf", "<cmd>Oil --float<CR><cmd>set relativenumber<CR>")
