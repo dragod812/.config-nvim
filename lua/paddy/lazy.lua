@@ -274,6 +274,18 @@ require("lazy").setup({
 			vim.keymap.set("n", "<leader>gz2", "<cmd>Git stash apply stash@{2}<CR>")
 		end,
 	},
+	{
+		"sindrets/diffview.nvim",
+		dependencies = { "nvim-lua/plenary.nvim" },
+		keys = {
+			{ "<leader>gv", "<cmd>DiffviewOpen<CR>", desc = "Diffview Open" },
+			{ "<leader>gV", "<cmd>DiffviewOpen main...HEAD<CR>", desc = "Diffview Main" },
+			{ "<leader>gh", "<cmd>DiffviewFileHistory %<CR>", desc = "File History" },
+			{ "<leader>gH", "<cmd>DiffviewFileHistory<CR>", desc = "Repo History" },
+			{ "<leader>gq", "<cmd>DiffviewClose<CR>", desc = "Close Diffview" },
+		},
+		opts = {},
+	},
 
 	-- Copilot
 	{ "github/copilot.vim" },
@@ -689,14 +701,31 @@ require("lazy").setup({
 		},
 	},
 
-	-- Codex (OpenAI Codex CLI floating window)
+	-- Codex (OpenAI Codex CLI terminal bridge)
 	{
-		"johnseth97/codex.nvim",
+		"pittcat/codex.nvim",
 		lazy = true,
+		dependencies = { "folke/snacks.nvim" },
 		keys = {
-			{ "<leader>ao", "<cmd>Codex<cr>", desc = "Toggle Codex" },
+			{ "<leader>ao", "<cmd>CodexToggle<cr>", desc = "Toggle Codex" },
+			{ "<leader>oo", "<cmd>CodexOpen<cr>", desc = "Open Codex" },
+			{ "<leader>op", "<cmd>CodexSendPath<cr>", desc = "Send path to Codex" },
+			{ "<leader>os", ":'<,'>CodexSendSelection<cr>", mode = "v", desc = "Send selection to Codex" },
 		},
-		opts = {},
+		opts = {
+			terminal = {
+				provider = "snacks",
+				direction = "vertical",
+				position = "right",
+				size = 0.35,
+			},
+			terminal_bridge = {
+				path_format = "rel",
+				path_prefix = "@",
+				auto_attach = true,
+				selection_mode = "reference",
+			},
+		},
 	},
 
 	-- ChatGPT
@@ -961,6 +990,11 @@ require("lazy").setup({
 				{ "<leader>gP", desc = "Push" },
 				{ "<leader>gr", desc = "Rebase" },
 				{ "<leader>gs", desc = "Status" },
+				{ "<leader>gv", desc = "Diffview Open" },
+				{ "<leader>gV", desc = "Diffview Main" },
+				{ "<leader>gh", desc = "File History" },
+				{ "<leader>gH", desc = "Repo History" },
+				{ "<leader>gq", desc = "Close Diffview" },
 				{ "<leader>gz", group = "Stash" },
 				{ "<leader>gz0", desc = "Apply stash@{0}" },
 				{ "<leader>gz1", desc = "Apply stash@{1}" },
@@ -981,6 +1015,10 @@ require("lazy").setup({
 				{ "<leader>at", desc = "Add From Tree" },
 				{ "<leader>aa", desc = "Accept Diff" },
 				{ "<leader>ad", desc = "Deny Diff" },
+
+				{ "<leader>oo", desc = "Open Codex" },
+				{ "<leader>op", desc = "Send Path to Codex" },
+				{ "<leader>os", desc = "Send Selection to Codex", mode = "v" },
 
 				{ "<leader>p", group = "Project" },
 				{ "<leader>pf", desc = "Files" },
