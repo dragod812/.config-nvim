@@ -28,40 +28,15 @@ require("lazy").setup({
 	-- Telescope
 	{
 		"nvim-telescope/telescope.nvim",
-		branch = "0.1.x",
+		-- Track master (not the 0.1.8 tag): master's previewer calls
+		-- vim.treesitter directly, which is compatible with nvim-treesitter's
+		-- `main` branch and no longer needs legacy-API shims. Requires Nvim 0.11+.
+		branch = "master",
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			"smartpde/telescope-recent-files",
 		},
 		config = function()
-			-- Shims for nvim-treesitter `main` branch: telescope's previewer
-			-- still calls the legacy nvim-treesitter.parsers / .configs API.
-			local ok, parsers = pcall(require, "nvim-treesitter.parsers")
-			if ok then
-				if not parsers.ft_to_lang then
-					parsers.ft_to_lang = function(ft)
-						return vim.treesitter.language.get_lang(ft) or ft
-					end
-				end
-				if not parsers.get_parser then
-					parsers.get_parser = function(bufnr, lang)
-						return vim.treesitter.get_parser(bufnr, lang)
-					end
-				end
-			end
-			-- `nvim-treesitter.configs` was removed on the main branch; preload a
-			-- stub so telescope's `pcall(require, ...)` picks up a usable table.
-			if not package.loaded["nvim-treesitter.configs"] then
-				package.loaded["nvim-treesitter.configs"] = {
-					is_enabled = function(_, lang)
-						return lang ~= nil and pcall(vim.treesitter.language.add, lang)
-					end,
-					get_module = function()
-						return { additional_vim_regex_highlighting = false }
-					end,
-				}
-			end
-
 			require("telescope").setup({
 				defaults = {
 					path_display = { "smart" },
@@ -384,9 +359,44 @@ require("lazy").setup({
 				},
 			})
 
+			local function strip_orphan_annotation_ids(workspace_edit)
+				if workspace_edit == nil or workspace_edit.changeAnnotations ~= nil then
+					return
+				end
+
+				local function clear_annotation_ids(edits)
+					for _, edit in ipairs(edits or {}) do
+						edit.annotationId = nil
+					end
+				end
+
+				for _, change in ipairs(workspace_edit.documentChanges or {}) do
+					clear_annotation_ids(change.edits)
+				end
+
+				for _, edits in pairs(workspace_edit.changes or {}) do
+					clear_annotation_ids(edits)
+				end
+			end
+
+			vim.lsp.handlers["textDocument/rename"] = function(_, result, ctx)
+				if not result then
+					vim.notify("Language server couldn't provide rename result", vim.log.levels.INFO)
+					return
+				end
+
+				strip_orphan_annotation_ids(result)
+				local client = assert(vim.lsp.get_client_by_id(ctx.client_id))
+				vim.lsp.util.apply_workspace_edit(result, client.offset_encoding)
+			end
+
 			-- Share cmp capabilities with all servers
-			local capabilities = require("cmp_nvim_lsp").default_capabilities()
+			local capabilities =
+				vim.tbl_deep_extend("force", vim.lsp.protocol.make_client_capabilities(), require("cmp_nvim_lsp").default_capabilities())
 			vim.lsp.config("*", { capabilities = capabilities })
+			local pyright_capabilities = vim.deepcopy(capabilities)
+			pyright_capabilities.textDocument.rename.honorsChangeAnnotations = false
+			pyright_capabilities.workspace.workspaceEdit.changeAnnotationSupport = nil
 
 			-- Server-specific configs
 			vim.lsp.config("lua_ls", {
@@ -412,6 +422,7 @@ require("lazy").setup({
 			})
 
 			vim.lsp.config("pyright", {
+				capabilities = pyright_capabilities,
 				settings = {
 					python = {
 						analysis = {
