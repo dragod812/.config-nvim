@@ -28,10 +28,7 @@ require("lazy").setup({
 	-- Telescope
 	{
 		"nvim-telescope/telescope.nvim",
-		-- Track master (not the 0.1.8 tag): master's previewer calls
-		-- vim.treesitter directly, which is compatible with nvim-treesitter's
-		-- `main` branch and no longer needs legacy-API shims. Requires Nvim 0.11+.
-		branch = "master",
+		version = "*",
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			"smartpde/telescope-recent-files",
@@ -391,8 +388,11 @@ require("lazy").setup({
 			end
 
 			-- Share cmp capabilities with all servers
-			local capabilities =
-				vim.tbl_deep_extend("force", vim.lsp.protocol.make_client_capabilities(), require("cmp_nvim_lsp").default_capabilities())
+			local capabilities = vim.tbl_deep_extend(
+				"force",
+				vim.lsp.protocol.make_client_capabilities(),
+				require("cmp_nvim_lsp").default_capabilities()
+			)
 			vim.lsp.config("*", { capabilities = capabilities })
 			local pyright_capabilities = vim.deepcopy(capabilities)
 			pyright_capabilities.textDocument.rename.honorsChangeAnnotations = false
