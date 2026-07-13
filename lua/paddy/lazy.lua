@@ -718,7 +718,7 @@ require("lazy").setup({
 		lazy = true,
 		dependencies = { "folke/snacks.nvim" },
 		keys = {
-			{ "<leader>ao", "<cmd>CodexToggle<cr>", desc = "Toggle Codex" },
+			{ "<leader>oi", "<cmd>CodexToggle<cr>", desc = "Toggle Codex" },
 			{ "<leader>oo", "<cmd>CodexOpen<cr>", desc = "Open Codex" },
 			{ "<leader>op", "<cmd>CodexSendPath<cr>", desc = "Send path to Codex" },
 			{ "<leader>os", ":'<,'>CodexSendSelection<cr>", mode = "v", desc = "Send selection to Codex" },
@@ -736,22 +736,6 @@ require("lazy").setup({
 				auto_attach = true,
 				selection_mode = "reference",
 			},
-		},
-	},
-
-	-- ChatGPT
-	{
-		"jackMort/ChatGPT.nvim",
-		dependencies = {
-			"MunifTanjim/nui.nvim",
-			"nvim-lua/plenary.nvim",
-			"nvim-telescope/telescope.nvim",
-		},
-		keys = {
-			{ "<leader>?", "<cmd>ChatGPT<CR>", desc = "ChatGPT" },
-		},
-		opts = {
-			openai_params = { model = "gpt-4-1106-preview" },
 		},
 	},
 
@@ -774,32 +758,12 @@ require("lazy").setup({
 	{
 		"hedyhli/outline.nvim",
 		keys = {
-			{ "<leader>o", "<cmd>Outline<CR>", noremap = true, silent = true, desc = "Outline" },
+			{ "<leader>O", "<cmd>Outline<CR>", noremap = true, silent = true, desc = "Outline" },
 		},
 		opts = {
 			outline_items = { show_symbol_lineno = true },
 			guides = { enabled = true },
 		},
-	},
-
-	-- PlantUML preview
-	{
-		"weirongxu/plantuml-previewer.vim",
-		build = "yarn install --frozen-lockfile",
-		dependencies = {
-			"aklt/plantuml-syntax",
-			"tyru/open-browser.vim",
-		},
-		config = function()
-			vim.g.plantuml_preview_image_format = "png"
-			vim.g.plantuml_preview_output_directory = vim.fn.expand("~/.cache/plantuml")
-			vim.g.plantuml_preview_open_output_file = 1
-			vim.g.plantuml_preview_open_output_file_auto_delete = 1
-			vim.g.plantuml_preview_dot = "dot"
-			vim.g.plantuml_preview_cmd = "plantuml"
-			vim.g.plantuml_preview_args = "-charset UTF-8"
-			vim.g.plantuml_preview_mappings = { preview = "<F5>", refresh = "<F6>" }
-		end,
 	},
 
 	-- Testing (vim-test + neotest)
@@ -952,9 +916,12 @@ require("lazy").setup({
 				end,
 			})
 			wk.add({
-				{ "<leader>c", desc = "Copy relative path" },
-				{ "<leader>C", desc = "Copy abs path" },
+				-- Top-level
+				{ "<leader>c", desc = "Copy relative path", mode = { "n", "v" } },
+				{ "<leader>C", desc = "Copy abs path", mode = { "n", "v" } },
 				{ "<leader>f", desc = "Format" },
+				{ "<leader>h", desc = "Diffget Left" },
+				{ "<leader>l", desc = "Diffget Right" },
 				{ "<leader>i", desc = "Next Diagnostic" },
 				{ "<leader>I", desc = "Prev Diagnostic" },
 				{ "<leader>j", desc = "Quickfix Next" },
@@ -963,32 +930,53 @@ require("lazy").setup({
 				{ "<leader>K", desc = "Loclist Prev" },
 				{ "<leader>m", desc = "Maximize Buffer" },
 				{ "<leader>M", desc = "Equal Width" },
-				{ "<leader>o", desc = "Outline" },
+				{ "<leader>-", desc = "Shrink Width" },
+				{ "<leader>=", desc = "Grow Width" },
 				{ "<leader>r", desc = "Registers" },
 				{ "<leader>s", desc = "Split Vertical" },
 				{ "<leader>u", desc = "Undo Tree" },
 				{ "<leader>x", desc = "File Explorer" },
+				{ "<leader>y", desc = "OSC Yank", mode = { "n", "v" } },
 				{ "<leader>z", desc = "Zen Mode" },
 				{ "<leader>?", desc = "ChatGPT" },
 				{ "<leader>`", desc = "Terminal" },
-				{ "<leader>bd", desc = "Delete buffer" },
-				{ "<leader>nh", desc = "Notification history" },
+				{ "<leader>bd", desc = "Delete Buffer" },
+				{ "<leader>nh", desc = "Notification History" },
 				{ "<leader><leader>", desc = "Opened Buffers" },
 				{ "<leader><CR>", desc = "Find File" },
 
+				-- Tabs
+				{ "<leader>1", desc = "Tab 1" },
+				{ "<leader>2", desc = "Tab 2" },
+				{ "<leader>3", desc = "Tab 3" },
+				{ "<leader>4", desc = "Tab 4" },
+				{ "<leader>5", desc = "Tab 5" },
+				{ "<leader>6", desc = "Tab 6" },
+				{ "<leader>7", desc = "Tab 7" },
+				{ "<leader>8", desc = "Tab 8" },
+				{ "<leader>9", desc = "Tab 9" },
+				{ "<leader>0", desc = "Last Tab" },
+
+				-- Document (Telescope)
 				{ "<leader>d", group = "Document" },
 				{ "<leader>dc", desc = "Classes" },
+				{ "<leader>dd", desc = "Diagnostics" },
 				{ "<leader>dm", desc = "Methods" },
 				{ "<leader>do", desc = "Symbols" },
 				{ "<leader>ds", desc = "Search" },
 				{ "<leader>dv", desc = "Variables" },
 
-				{ "<leader>ea", desc = "Harpoon Add" },
-				{ "<leader>ee", desc = "Harpoon Edit" },
+				-- Harpoon
+				{ "<leader>e", group = "Harpoon" },
+				{ "<leader>ea", desc = "Add" },
+				{ "<leader>ee", desc = "Edit" },
 
+				-- Git
 				{ "<leader>g", group = "Git" },
 				{ "<leader>g=", desc = "Stage All" },
+				{ "<leader>g=", desc = "Diffput", mode = "v" },
 				{ "<leader>g-", desc = "Unstage All" },
+				{ "<leader>g-", desc = "Diffget", mode = "v" },
 				{ "<leader>gb", desc = "Blame" },
 				{ "<leader>gc", desc = "Checkout" },
 				{ "<leader>gd", desc = "Diff Split" },
@@ -996,7 +984,7 @@ require("lazy").setup({
 				{ "<leader>gf", desc = "File Log" },
 				{ "<leader>gl", desc = "Log" },
 				{ "<leader>gM", desc = "Diff Main" },
-				{ "<leader>gB", desc = "Browse File" },
+				{ "<leader>gB", desc = "Browse File", mode = { "n", "v" } },
 				{ "<leader>gp", desc = "Pull" },
 				{ "<leader>gP", desc = "Push" },
 				{ "<leader>gr", desc = "Rebase" },
@@ -1011,12 +999,14 @@ require("lazy").setup({
 				{ "<leader>gz1", desc = "Apply stash@{1}" },
 				{ "<leader>gz2", desc = "Apply stash@{2}" },
 
+				-- New file / buffer
 				{ "<leader>n", group = "New File" },
 				{ "<leader>nt", desc = "New Tab" },
 				{ "<leader>nx", desc = "New Horizontal" },
 				{ "<leader>nv", desc = "New Vertical" },
 
-				{ "<leader>a", group = "AI / Claude" },
+				-- AI
+				{ "<leader>a", group = "AI" },
 				{ "<leader>ai", desc = "Toggle Claude" },
 				{ "<leader>af", desc = "Focus Claude" },
 				{ "<leader>ar", desc = "Resume Claude" },
@@ -1027,10 +1017,15 @@ require("lazy").setup({
 				{ "<leader>aa", desc = "Accept Diff" },
 				{ "<leader>ad", desc = "Deny Diff" },
 
+				-- OpenAI / Codex
+				{ "<leader>o", group = "OpenAI" },
+				{ "<leader>oi", desc = "Toggle Codex" },
 				{ "<leader>oo", desc = "Open Codex" },
 				{ "<leader>op", desc = "Send Path to Codex" },
 				{ "<leader>os", desc = "Send Selection to Codex", mode = "v" },
+				{ "<leader>O", desc = "Outline" },
 
+				-- Project (Telescope)
 				{ "<leader>p", group = "Project" },
 				{ "<leader>pf", desc = "Files" },
 				{ "<leader>pj", desc = "Jumplist" },
@@ -1042,6 +1037,7 @@ require("lazy").setup({
 				{ "<leader>pv", desc = "Workspace Variables" },
 				{ "<leader>pc", desc = "Workspace Classes" },
 
+				-- Test / Debug
 				{ "<leader>t", group = "Test/Debug" },
 				{ "<leader>tr", desc = "Run Nearest" },
 				{ "<leader>tf", desc = "Run File" },
@@ -1060,6 +1056,7 @@ require("lazy").setup({
 				{ "<leader>tx", desc = "Stop" },
 				{ "<leader>tv", desc = "Variables" },
 
+				-- Code actions / tools
 				{ "<leader>v", group = "Code Actions" },
 				{ "<leader>va", desc = "Actions" },
 				{ "<leader>vd", desc = "Diagnostics (loclist)" },
@@ -1067,10 +1064,12 @@ require("lazy").setup({
 				{ "<leader>vl", desc = "LSP Restart" },
 				{ "<leader>vr", desc = "Rename" },
 				{ "<leader>vt", desc = "Generate Go Test" },
+				{ "<leader>vp", desc = "Markdown Preview" },
+				{ "<leader>vM", desc = "Show Diagram" },
 				{ "<leader>v/", desc = "Diff Split" },
 				{ "<leader>vj", group = "JSON" },
-				{ "<leader>vjf", desc = "Format" },
-				{ "<leader>vjc", desc = "Clean K8s" },
+				{ "<leader>vjf", desc = "Format", mode = { "n", "v" } },
+				{ "<leader>vjc", desc = "Clean K8s", mode = "v" },
 				{ "<leader>vju", desc = "Count Unique" },
 				{ "<leader>vs", group = "SQL" },
 				{ "<leader>vsc", desc = "Expand Templates" },
