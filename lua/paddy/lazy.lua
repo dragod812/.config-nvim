@@ -516,6 +516,7 @@ require("lazy").setup({
 			bigfile = { enabled = true },
 			quickfile = { enabled = true },
 			input = { enabled = true },
+			picker = { enabled = true },
 			notifier = { enabled = true },
 			indent = { enabled = true },
 			words = { enabled = true },
@@ -739,6 +740,70 @@ require("lazy").setup({
 		},
 	},
 
+	-- OpenCode (TUI + editor context bridge)
+	-- Keymaps parallel Claude (a*) and Codex (o*): q* is free and avoids o/a collisions.
+	{
+		"nickjvandyke/opencode.nvim",
+		version = "*",
+		dependencies = { "folke/snacks.nvim" },
+		init = function()
+			local opencode_cmd = "opencode --port"
+			---@type snacks.terminal.Opts
+			local snacks_terminal_opts = {
+				win = {
+					position = "right",
+					width = 0.35,
+					enter = false,
+				},
+			}
+
+			-- Set before plugin loads (opts are merged at require time)
+			---@type opencode.Opts
+			vim.g.opencode_opts = {
+				server = {
+					start = function()
+						require("snacks.terminal").open(opencode_cmd, snacks_terminal_opts)
+					end,
+				},
+			}
+
+			-- Required so OpenCode file edits reload in Neovim
+			vim.o.autoread = true
+
+			-- n-only for leader toggle: t-mode + leader delays Space input in the terminal
+			vim.keymap.set("n", "<leader>qi", function()
+				require("snacks.terminal").toggle(opencode_cmd, snacks_terminal_opts)
+			end, { desc = "Toggle OpenCode" })
+			vim.keymap.set({ "n", "x" }, "<leader>qa", function()
+				require("opencode").ask("@this: ")
+			end, { desc = "Ask OpenCode" })
+			-- Operator captures the visual range before async server discovery
+			vim.keymap.set("x", "<leader>qs", function()
+				return require("opencode").operator("@this ")
+			end, { expr = true, desc = "Send selection to OpenCode" })
+			vim.keymap.set({ "n", "x" }, "<leader>qS", function()
+				require("opencode").select()
+			end, { desc = "Select OpenCode" })
+			vim.keymap.set("n", "<leader>qb", function()
+				require("opencode").prompt("@buffer ")
+			end, { desc = "Add buffer to OpenCode" })
+			vim.keymap.set("n", "<leader>qp", function()
+				local path = vim.fn.fnamemodify(vim.fn.expand("%:p"), ":.")
+				if path == "" then
+					vim.notify("No file path for current buffer", vim.log.levels.WARN, { title = "OpenCode" })
+					return
+				end
+				require("opencode").prompt("@" .. path .. " ")
+			end, { desc = "Send path to OpenCode" })
+			vim.keymap.set({ "n", "x" }, "go", function()
+				return require("opencode").operator("@this ")
+			end, { expr = true, desc = "Append range to OpenCode" })
+			vim.keymap.set("n", "goo", function()
+				return require("opencode").operator("@this ") .. "_"
+			end, { expr = true, desc = "Append line to OpenCode" })
+		end,
+	},
+
 	-- Surround
 	{
 		"kylechui/nvim-surround",
@@ -938,7 +1003,6 @@ require("lazy").setup({
 				{ "<leader>x", desc = "File Explorer" },
 				{ "<leader>y", desc = "OSC Yank", mode = { "n", "v" } },
 				{ "<leader>z", desc = "Zen Mode" },
-				{ "<leader>?", desc = "ChatGPT" },
 				{ "<leader>`", desc = "Terminal" },
 				{ "<leader>bd", desc = "Delete Buffer" },
 				{ "<leader>nh", desc = "Notification History" },
@@ -1024,6 +1088,15 @@ require("lazy").setup({
 				{ "<leader>op", desc = "Send Path to Codex" },
 				{ "<leader>os", desc = "Send Selection to Codex", mode = "v" },
 				{ "<leader>O", desc = "Outline" },
+
+				-- OpenCode (q* free; a*=Claude, o*=Codex)
+				{ "<leader>q", group = "OpenCode" },
+				{ "<leader>qi", desc = "Toggle OpenCode" },
+				{ "<leader>qa", desc = "Ask OpenCode", mode = { "n", "x" } },
+				{ "<leader>qs", desc = "Send Selection to OpenCode", mode = "x" },
+				{ "<leader>qS", desc = "Select OpenCode", mode = { "n", "x" } },
+				{ "<leader>qb", desc = "Add Buffer to OpenCode" },
+				{ "<leader>qp", desc = "Send Path to OpenCode" },
 
 				-- Project (Telescope)
 				{ "<leader>p", group = "Project" },
